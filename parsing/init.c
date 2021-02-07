@@ -1,5 +1,14 @@
 #include "../cub3d.h"
 
+void init_moves(t_move *moves) {
+    int i = 0;
+    moves->nb_move = 0;
+    while(i < 10) {
+        moves->wait_mode[i] = -1;
+        i++;
+    }
+}
+
 t_game new_game() {
     t_game game;
     // size
@@ -15,9 +24,7 @@ t_game new_game() {
     game.render.ray.planeX = 0;
     game.render.ray.planeY = 0.66;
 
-    game.render.ray.oldTime = 0;
-    game.render.ray.time = 0;
-
+    init_moves(&game.render.moves);
 
     game.texture.ea = NULL;
     game.texture.we = NULL;

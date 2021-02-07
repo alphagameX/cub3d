@@ -53,6 +53,7 @@ typedef struct  t_frame {
 }               t_frame;
 
 typedef struct s_ray {
+
     double angleX;
     int stepX, stepY;
     double rayDirX, rayDirY;
@@ -60,18 +61,23 @@ typedef struct s_ray {
     double deltaDistX, deltaDistY;
     double perpWallDist;
 
-    double posX, posY;
+    int mapX, mapY;
+    int lineHeight, drawStart, drawEnd;
     double dirX, dirY;
-    double time, oldTime;
     double planeX, planeY;
 } t_ray;
+
+typedef struct s_move {
+    int wait_mode[10];
+    int nb_move;
+} t_move;
 
 typedef struct s_render {
     void *mlx;
     void *win;
     t_ray ray;
     t_frame frame;
-
+    t_move moves;
 } t_render;
 
 typedef struct s_game {
@@ -100,6 +106,7 @@ void map_valid(t_game game);
 
 // init
 t_game new_game();
+void init_moves(t_move *moves);
 
 // utils
 void debug_map(t_game game);
@@ -110,6 +117,13 @@ void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
 
 // render
 int rendering(t_game *game);
-int key_hook(int key_code,  t_game *game);
+int move(t_game *game);
+
+int set_move(int key_code, t_move *moves);
+int unset_move(int key_code, t_move *moves);
+
+//core
+void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
+int new_image(t_game *game);
 
 #endif //CUB3D_CUB3D_H

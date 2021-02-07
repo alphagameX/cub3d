@@ -22,8 +22,8 @@ int main(int argv, char **argc) {
     game.render.frame.addr = mlx_get_data_addr(game.render.frame.img, &game.render.frame.bits_per_pixel, &game.render.frame.line_length, &game.render.frame.endian);
     mlx_put_image_to_window(game.render.mlx, game.render.win, game.render.frame.img, 0, 0);
 
-    mlx_hook(game.render.win, 02, 0L, key_hook, &game);
-
+    mlx_hook(game.render.win, 02, 1L<<0, set_move, &game.render.moves);
+    mlx_hook(game.render.win, 03, 1L<<1, unset_move, &game.render.moves);
     //mlx_key_hook(game.render.win, key_hook, &game);
     mlx_loop_hook(game.render.mlx, rendering, &game);
 

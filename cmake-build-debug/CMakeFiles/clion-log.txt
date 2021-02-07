@@ -1,1 +1,1 @@
-CMakeLists.txt not found in /Users/arthurtinseau/Documents/Codage/C/cub3d Select CMakeLists.txt
+CMakeLists.txt not found in /Users/atinseau/Desktop/project/C/cub3d Select CMakeLists.txt

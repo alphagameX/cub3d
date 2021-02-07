@@ -5,7 +5,8 @@ PARSE = parsing/map.c \
         parsing/getter.c \
         parsing/map_close.c
 
-RENDER = rendering/render.c
+RENDER = rendering/render.c \
+		 rendering/core.c
 
 OBJ = main.c $(PARSE) $(RENDER)
 
