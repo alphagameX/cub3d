@@ -16,6 +16,9 @@ int main(int argv, char **argc) {
 
     // rendering start
 
+    set_dir(&game);
+
+   
     game.render.mlx = mlx_init();
     game.render.win = mlx_new_window(game.render.mlx, game.size.width, game.size.height, "cub3d");
 

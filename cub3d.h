@@ -11,17 +11,28 @@
 #include "stdio.h"
 #include "super-libft/libft.h"
 
+typedef struct s_rgb {
+    int color;
+    int is_see;
+} t_rgb;
 
 typedef struct s_size {
     int width;
     int height;
 } t_size;
 
+typedef struct s_sprite {
+    char *path;
+    t_frame frame;
+    int is_see;
+} t_sprite;
+
+
 
 typedef struct s_box {
-    char *c_floor;
-    char *c_sky;
-    char *c_sprite;
+    t_rgb floor;
+    t_rgb sky;
+    t_sprite c_sprite;
 } t_box;
 
 typedef struct s_spawn {
@@ -50,6 +61,7 @@ typedef struct  t_frame {
 
 typedef struct s_tex {
     t_frame tex;
+    int is_see;
     char *path;
 } t_tex;
 
@@ -99,17 +111,16 @@ typedef struct s_game {
 
 // init
 t_game new_game();
-void init_moves(t_move *moves);
+void set_dir(t_game *game);
 
 // parsing
 
 t_game parsing(char *file);
-void destroy_map(t_game *game);
+void destroy_game(t_game *game);
+
 
 // getter
 void get_resolution(char *res, t_size *size);
-void get_texture(char *line, t_texture *texture);
-int get_box(char *line, t_box *box);
 
 // crasher
 void exit_failure(char *msg);

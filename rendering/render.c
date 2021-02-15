@@ -76,7 +76,7 @@ int move(t_game *game) {
         }
 
         if(game->render.moves.wait_mode[i] == 53) {
-            destroy_map(game);
+            //destroy_game(game);
             exit_failure(ft_argv_strjoin(1, "END"));
         }
         i++;
@@ -211,13 +211,13 @@ int rendering(t_game *game) {
                 texPos += step;
                 char *color;
                 if(side == 0 && game->render.ray.rayDirX < 0)
-                    color = game->texture.so.tex.addr + (4 * game->texture.we.tex.width * texY) + (4 * texX);
+                    color = game->texture.no.tex.addr + (4 * game->texture.no.tex.width * texY) + (4 * texX);
                 else if(side == 0 && game->render.ray.rayDirX > 0)
-                    color = game->texture.no.tex.addr + (4 * game->texture.we.tex.width * texY) + (4 * texX);
+                    color = game->texture.so.tex.addr + (4 * game->texture.so.tex.width * texY) + (4 * texX);
                 else if(side == 1 && game->render.ray.rayDirY < 0)
-                    color = game->texture.ea.tex.addr + (4 * game->texture.we.tex.width * texY) + (4 * texX);
-                else if(side == 1 && game->render.ray.rayDirY > 0)
                     color = game->texture.we.tex.addr + (4 * game->texture.we.tex.width * texY) + (4 * texX);
+                else if(side == 1 && game->render.ray.rayDirY > 0)
+                    color = game->texture.ea.tex.addr + (4 * game->texture.ea.tex.width * texY) + (4 * texX);
 
                 my_mlx_pixel_put(&game->render.frame, x, y, *(unsigned int *)color);
             } else if(y > game->render.ray.drawEnd) {

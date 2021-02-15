@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "parsing.h"
 
 char *check_is_valid_texture_path(char *texture_path) {
     int fd;
@@ -48,46 +48,4 @@ void get_resolution(char *res, t_size *size) {
     }
 }
 
-void get_texture(char *line, t_texture *texture) {
-    char **param = ft_split(line, ' ');
-    int i = 0;
 
-
-    while(param[i]) {
-        i++;
-    }
-    if(i != 2)
-        exit_failure("One texture flags as wrong argument number");
-    if(param[0][0] == 'N' && param[0][1] == 'O')
-        texture->no.path = check_is_valid_texture_path(param[1]);
-    if(param[0][0] == 'S' && param[0][1] == 'O')
-        texture->so.path = check_is_valid_texture_path(param[1]);
-    if(param[0][0] == 'W' && param[0][1] == 'E')
-        texture->we.path = check_is_valid_texture_path(param[1]);
-    if(param[0][0] == 'E' && param[0][1] == 'A')
-        texture->ea.path = check_is_valid_texture_path(param[1]);
-    free(param[0]);
-
-    i = 0;
-}
-
-int get_box(char *line, t_box *box) {
-    char ** param = ft_split(line, ' ');
-    int i = 0;
-
-    while(param[i])
-        i++;
-    if(i != 2)
-        return (0);
-
-    if(**param =='S')
-        box->c_sprite = (open((const char *)param[1], O_RDONLY) == -1) ? NULL : param[1];
-    if(**param == 'F')
-        box->c_floor = param[1];
-    if(**param == 'C')
-        box->c_sky = param[1];
-
-    free(param[0]);
-
-    return (1);
-}

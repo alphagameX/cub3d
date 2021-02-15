@@ -1,4 +1,3 @@
-#include "../cub3d.h"
 #include "parsing.h"
 
 char *fill_space(int filled) {
@@ -138,7 +137,6 @@ int propagation(char **t, t_tmap map) {
 
     return (1);
 }
-
 
 int parse_smap(char *smap, t_tmap *map) {
     int y = 0;

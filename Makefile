@@ -1,9 +1,11 @@
 NAME = cub3d
 PARSE = parsing/map.c \
         parsing/crash.c \
-        parsing/init.c \
         parsing/getter.c \
-        parsing/tmap.c
+        parsing/tmap.c \
+		parsing/setup/init.c \
+		parsing/model/texture.c \
+		parsing/model/box.c
 
 RENDER = rendering/render.c \
 		 rendering/core.c \
@@ -12,11 +14,13 @@ RENDER = rendering/render.c \
 OBJ = main.c $(PARSE) $(RENDER)
 
 LIB = ./super-libft/
-FLAG = -Werror
+FLAG = -Werror -fsanitize=address
 
 all:
 	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) -Lmlx -lmlx -framework OpenGL -framework AppKit
-	@./$(NAME) map.cub --debug
+	./cub3d map.cub
+
+re: all
 
 leak:
 	valgrind ./$(NAME) --leak-check=full -v

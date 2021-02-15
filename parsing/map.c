@@ -1,4 +1,3 @@
-#include "../cub3d.h"
 #include "parsing.h"
 
 void debug_map(t_game game) {
@@ -30,10 +29,10 @@ int map_line(char *line) {
 }
 
 int is_texture(char *line, t_texture texture) {
-    if(((line[0] == 'N' && line[1] == 'O') && !texture.no.path) ||
-       ((line[0] == 'S' && line[1] == 'O') && !texture.so.path) ||
-       ((line[0] == 'W' && line[1] == 'E') && !texture.we.path) ||
-       ((line[0] == 'E' && line[1] == 'A') && !texture.ea.path))
+    if(((line[0] == 'N' && line[1] == 'O')) ||
+       ((line[0] == 'S' && line[1] == 'O')) ||
+       ((line[0] == 'W' && line[1] == 'E')) ||
+       ((line[0] == 'E' && line[1] == 'A')))
         return (1);
     return (0);
 }
@@ -56,9 +55,8 @@ t_game parsing(char *file) {
     while(get_next_line(fd, &line)) {
         if(line[0] == 'R' && game.size.width == 0 && game.size.width == 0)
             get_resolution(line, &game.size);
-        else if(is_texture(line, game.texture)) {
-            get_texture(line, &game.texture);
-        }
+        else if(is_texture(line, game.texture))
+            get_texture(line, &game);
         else if(is_box(line, game.box)) {
             get_box(line, &game.box);
         }
@@ -77,7 +75,10 @@ t_game parsing(char *file) {
         ft_unleak_strjoin(&smap, line);
     free(line);
 
-    map_valid(game);
+    is_valid_texture(&game);
+
+    //map_valid(game);
+
     if(parse_smap(smap, &game.map) == 0)
         exit_failure("Somethings wrong with the map");
     free(smap);
