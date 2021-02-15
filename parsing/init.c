@@ -15,6 +15,9 @@ t_game new_game() {
     game.size.width = 0;
     game.size.height = 0;
 
+    game.map.height = 0;
+    game.map.width = 0;
+
     game.map.spawn.y = -1;
     game.map.spawn.x = -1;
 
@@ -26,10 +29,10 @@ t_game new_game() {
 
     init_moves(&game.render.moves);
 
-    game.texture.ea = NULL;
-    game.texture.we = NULL;
-    game.texture.so = NULL;
-    game.texture.no = NULL;
+    game.texture.ea.path = NULL;
+    game.texture.we.path = NULL;
+    game.texture.so.path = NULL;
+    game.texture.no.path = NULL;
 
     game.box.c_sky = NULL;
     game.box.c_floor = NULL;
@@ -39,12 +42,19 @@ t_game new_game() {
 }
 
 void destroy_map(t_game *game) {
-    free(game->texture.ea);
-    free(game->texture.we);
-    free(game->texture.so);
-    free(game->texture.no);
+    int i;
 
+    i = 0;
+    free(game->texture.ea.path);
+    free(game->texture.we.path);
+    free(game->texture.so.path);
+    free(game->texture.no.path);
     free(game->box.c_floor);
     free(game->box.c_sky);
     free(game->box.c_sprite);
+
+    while(game->map.tmap[i]) {
+        free(game->map.tmap[i]);
+        i++;
+    }
 }

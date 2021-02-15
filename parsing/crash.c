@@ -4,29 +4,33 @@
 void exit_failure(char *msg) {
     ft_putstr("Error\n");
     ft_printf("message: %s\n", msg);
-    free(msg);
+    system("leaks cub3d");
     exit(0);
 }
 
+int check_resolution(t_size size) {
+    if(size.width == 0 || size.height == 0)
+        return (0);
+    return (1);
+}
+
+int check_texture(t_texture texture) {
+    if(!texture.ea.path || !texture.we.path || !texture.so.path || !texture.no.path)
+        return (0);
+    return (1);
+}
+
+int check_box(t_box box) {
+    if(!box.c_sky || !box.c_floor || !box.c_sprite)
+      return (0);
+    return (1);
+}
+
 void map_valid(t_game game) {
-    if(game.size.width == 0 || game.size.height == 0)
-    {
-        ft_putstr("Error\n");
-        ft_printf("Resolution is not setted or invalid...\nWIDTH: %d\nHEIGHT: %d\n", game.size.width, game.size.height);
-        exit(0);
-    }
-
-    if(!game.texture.ea || !game.texture.we || !game.texture.so || !game.texture.no)
-    {
-        ft_putstr("Error\n");
-        ft_printf("Oww some texture is missing...\nNO: %s\nSO: %s \nWE: %s\nEA: %s\n", game.texture.no, game.texture.so, game.texture.we, game.texture.ea);
-        exit(0);
-    }
-
-    if(!game.box.c_sky || !game.box.c_floor || !game.box.c_sprite)
-    {
-        ft_putstr("Error\n");
-        ft_printf("Args in box is missing...\nS: %s\nF: %s\nC: %s\n", game.box.c_sprite, game.box.c_floor, game.box.c_sky);
-        exit(0);
-    }
+    if(check_resolution(game.size) == 0)
+        exit_failure("Size screen is invalid");
+    if(check_texture(game.texture) == 0)
+        exit_failure("One or some textures is invalid");
+    if(check_box(game.box) == 0)
+        exit_failure("Sprite or hex for floor and sky is wrong");
 }

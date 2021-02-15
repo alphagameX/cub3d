@@ -9,7 +9,7 @@ char *ft_argv_strjoin(int count, ...) {
     va_start(list, count);
     while (i < count)
     {
-        joined = ft_strjoin(joined, va_arg(list, char *));
+        ft_unleak_strjoin(&joined, va_arg(list, char *));
         i++;
     }
     va_end(list);

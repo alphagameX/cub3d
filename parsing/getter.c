@@ -1,5 +1,19 @@
 #include "../cub3d.h"
 
+char *check_is_valid_texture_path(char *texture_path) {
+    int fd;
+    if(strstr(texture_path, ".xpm") != NULL) {
+        fd = open((const char *)texture_path, O_RDONLY);
+        close(fd);
+        if(fd == -1)
+            return (NULL);
+        else
+            return (texture_path);
+    } else {
+        return (NULL);
+    }
+}
+
 void get_resolution(char *res, t_size *size) {
     int i = 0;
     char **r = ft_split(res + 2, ' ');
@@ -16,9 +30,7 @@ void get_resolution(char *res, t_size *size) {
                 i++;
             }
             free(r);
-            ft_putstr("Error\n");
-            ft_putstr("There is extra parameter in R options\n");
-            exit(0);
+            exit_failure("Wrong argument number in R flag");
         }
         i++;
     }
@@ -36,41 +48,37 @@ void get_resolution(char *res, t_size *size) {
     }
 }
 
-
 void get_texture(char *line, t_texture *texture) {
-    char ** param = ft_split(line, ' ');
+    char **param = ft_split(line, ' ');
     int i = 0;
+
 
     while(param[i]) {
         i++;
     }
-    if(i != 2) {
-        ft_putstr("Error\n");
-        ft_printf("Too many argument : %s", param[i - 1]);
-        exit(0);
-    }
+    if(i != 2)
+        exit_failure("One texture flags as wrong argument number");
     if(param[0][0] == 'N' && param[0][1] == 'O')
-        texture->no = (open((const char *)param[1], O_RDONLY) == -1) ? NULL : param[1];
+        texture->no.path = check_is_valid_texture_path(param[1]);
     if(param[0][0] == 'S' && param[0][1] == 'O')
-        texture->so = (open((const char *)param[1], O_RDONLY) == -1) ? NULL : param[1];
+        texture->so.path = check_is_valid_texture_path(param[1]);
     if(param[0][0] == 'W' && param[0][1] == 'E')
-        texture->we = (open((const char *)param[1], O_RDONLY) == -1) ? NULL : param[1];
+        texture->we.path = check_is_valid_texture_path(param[1]);
     if(param[0][0] == 'E' && param[0][1] == 'A')
-        texture->ea = (open((const char *)param[1], O_RDONLY) == -1) ? NULL : param[1];
+        texture->ea.path = check_is_valid_texture_path(param[1]);
+    free(param[0]);
+
+    i = 0;
 }
 
-
-void get_box(char *line, t_box *box) {
+int get_box(char *line, t_box *box) {
     char ** param = ft_split(line, ' ');
     int i = 0;
 
     while(param[i])
         i++;
-    if(i > 2) {
-        ft_putstr("Error\n");
-        ft_printf("Too many argument : %s", param[i - 1]);
-        exit(0);
-    }
+    if(i != 2)
+        return (0);
 
     if(**param =='S')
         box->c_sprite = (open((const char *)param[1], O_RDONLY) == -1) ? NULL : param[1];
@@ -79,4 +87,7 @@ void get_box(char *line, t_box *box) {
     if(**param == 'C')
         box->c_sky = param[1];
 
+    free(param[0]);
+
+    return (1);
 }

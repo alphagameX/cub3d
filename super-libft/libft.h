@@ -77,7 +77,7 @@ void				ft_putnbr_fd(int n, int fd);
 void				ft_putendl_fd(char *s, int fd);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char 				*ft_argv_strjoin(int count, ...);
-
+void                ft_unleak_strjoin(char **dst, char *src);
 // PRINTF
 
 

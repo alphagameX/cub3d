@@ -17,12 +17,6 @@ typedef struct s_size {
     int height;
 } t_size;
 
-typedef struct s_texture {
-    char *no;
-    char *so;
-    char *we;
-    char *ea;
-} t_texture;
 
 typedef struct s_box {
     char *c_floor;
@@ -50,7 +44,21 @@ typedef struct  t_frame {
     int         bits_per_pixel;
     int         line_length;
     int         endian;
+    int         width;
+    int         height;
 }               t_frame;
+
+typedef struct s_tex {
+    t_frame tex;
+    char *path;
+} t_tex;
+
+typedef struct s_texture {
+    t_tex no;
+    t_tex so;
+    t_tex we;
+    t_tex ea;
+} t_texture;
 
 typedef struct s_ray {
 
@@ -89,8 +97,11 @@ typedef struct s_game {
 } t_game;
 
 
-// parsing
+// init
+t_game new_game();
+void init_moves(t_move *moves);
 
+// parsing
 
 t_game parsing(char *file);
 void destroy_map(t_game *game);
@@ -98,15 +109,12 @@ void destroy_map(t_game *game);
 // getter
 void get_resolution(char *res, t_size *size);
 void get_texture(char *line, t_texture *texture);
-void get_box(char *line, t_box *box);
+int get_box(char *line, t_box *box);
 
 // crasher
 void exit_failure(char *msg);
 void map_valid(t_game game);
 
-// init
-t_game new_game();
-void init_moves(t_move *moves);
 
 // utils
 void debug_map(t_game game);
@@ -114,6 +122,7 @@ void debug_map(t_game game);
 // drawing
 
 void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
+unsigned int my_mlx_pixel_get(t_frame *data, int x, int y);
 
 // render
 int rendering(t_game *game);
@@ -125,5 +134,6 @@ int unset_move(int key_code, t_move *moves);
 //core
 void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
 int new_image(t_game *game);
+void generate_textures(t_game *game);
 
 #endif //CUB3D_CUB3D_H
