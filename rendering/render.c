@@ -75,10 +75,8 @@ int move(t_game *game) {
             game->render.ray.planeY = oldPlaneX * sin(rotSpeed) + game->render.ray.planeY * cos(rotSpeed);
         }
 
-        if(game->render.moves.wait_mode[i] == 53) {
-            //destroy_game(game);
-            exit_failure(ft_argv_strjoin(1, "END"));
-        }
+        if(game->render.moves.wait_mode[i] == 53)
+            destroy_game(game);
         i++;
     }
 
