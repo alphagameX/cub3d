@@ -100,5 +100,7 @@ void destroy_game(t_game *game) {
         }
     }
 
+    system("leaks cub3d");
+
     exit(0);
 }

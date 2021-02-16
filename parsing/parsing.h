@@ -16,6 +16,6 @@ char *check_is_valid_texture_path(char *texture_path);
 
 void get_texture(char *line, t_game *game);
 void get_box(char *line, t_game *game);
-
+void get_resolution(char *res, t_game *game);
 
 #endif //CUB3D_PARSING_H

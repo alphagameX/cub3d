@@ -13,10 +13,13 @@ void check_box_sprite(t_sprite *sprite, t_game *game, char *param) {
 }
 
 void create_rgb(t_rgb *rgb, t_game *game, char *color) {
-    char *str = ft_split(color, ",");
+    char **str = ft_split(color, ',');
     int i = 0;
+    int tmp;
+
     while(str[i]) {
-        if(ft_atoi(str[i]) > 255) {
+        tmp = ft_atoi(str[i]);
+        if(tmp > 255 && tmp < 0 ) {
             ft_putstr("Error\n");
             ft_putstr("One of RGB code is above 255\n");
             destroy_game(game);
@@ -30,6 +33,10 @@ void create_rgb(t_rgb *rgb, t_game *game, char *color) {
     }
 
     rgb->color = (ft_atoi(str[0]) << 16 | ft_atoi(str[1]) << 8 | ft_atoi(str[2]));
+    i = 0;
+    while(str[i])
+        free(str[i++]);
+    free(str);
 }
 
 void get_box(char *line, t_game *game) {
@@ -38,8 +45,11 @@ void get_box(char *line, t_game *game) {
 
     while(param[i])
         i++;
-    if(i != 2)
-        return (0);
+    if(i != 2) {
+        ft_putstr("Error\n");
+        ft_putstr("Wrong argument number for sprite floor or sky flag\n");
+        destroy_game(game);
+    }
 
     if(**param =='S')
         check_box_sprite(&game->box.c_sprite, game, param[1]);
@@ -52,5 +62,5 @@ void get_box(char *line, t_game *game) {
         free(param[1]);
     }
     free(param[0]);
-    return (1);
+    free(param);
 }

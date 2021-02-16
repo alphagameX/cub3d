@@ -5,7 +5,7 @@ void debug_map(t_game game) {
 
     ft_printf("max width: %dpx\nmax height: %dpx\n", game.size.width, game.size.height);
     ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", game.texture.no.path, game.texture.so.path, game.texture.we.path, game.texture.ea.path);
-    ft_printf("Sprite: %s\nFloor color: %s\nSky color: %s\n", game.box.c_sprite, game.box.c_floor, game.box.c_sky);
+    //ft_printf("Sprite: %s\nFloor color: %s\nSky color: %s\n", game.box.c_sprite, game.box., game.box.c_sky);
     ft_printf("Map width: %d\nMap height: %d\n", game.map.width, game.map.height);
     ft_printf("spawnpoint: y %d, x %d, dir: %c\n", (int)game.map.spawn.y, (int)game.map.spawn.x, game.map.spawn.dir);
 
@@ -38,9 +38,9 @@ int is_texture(char *line, t_texture texture) {
 }
 
 int is_box(char *line, t_box box) {
-    if(((line[0] == 'S' && line[1] == ' ') && !box.c_sprite) ||
-       ((line[0] == 'F' && line[1] == ' ') && !box.c_floor) ||
-       ((line[0] == 'C' && line[1] == ' ') && !box.c_sky))
+    if(((line[0] == 'S' && line[1] == ' ') ) ||
+       ((line[0] == 'F' && line[1] == ' ')) ||
+       ((line[0] == 'C' && line[1] == ' ') ))
         return (1);
     return (0);
 }
@@ -54,11 +54,11 @@ t_game parsing(char *file) {
     // get option
     while(get_next_line(fd, &line)) {
         if(line[0] == 'R' && game.size.width == 0 && game.size.width == 0)
-            get_resolution(line, &game.size);
+            get_resolution(line, &game);
         else if(is_texture(line, game.texture))
             get_texture(line, &game);
         else if(is_box(line, game.box)) {
-            get_box(line, &game.box);
+            get_box(line, &game);
         }
         // get map
         else {

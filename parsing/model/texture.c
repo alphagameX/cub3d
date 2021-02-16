@@ -24,6 +24,8 @@ void is_valid_texture(t_game *game) {
 void check_tex(t_tex *tex, t_game *game, char *type, char *param) {
      if(tex->is_see < 1) {
            tex->path = check_is_valid_texture_path(param);
+           if(!tex->path)
+                free(param);
            tex->is_see += 1; 
      } else {
         ft_putstr("Error\n");
@@ -57,4 +59,5 @@ void get_texture(char *line, t_game *game) {
         check_tex(&game->texture.ea, game, param[0], param[1]);
         
     free(param[0]);
+    free(param);
 }

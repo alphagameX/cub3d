@@ -5,7 +5,8 @@ PARSE = parsing/map.c \
         parsing/tmap.c \
 		parsing/setup/init.c \
 		parsing/model/texture.c \
-		parsing/model/box.c
+		parsing/model/box.c \
+		parsing/model/resolution.c
 
 RENDER = rendering/render.c \
 		 rendering/core.c \
@@ -14,7 +15,7 @@ RENDER = rendering/render.c \
 OBJ = main.c $(PARSE) $(RENDER)
 
 LIB = ./super-libft/
-FLAG = -Werror -fsanitize=address
+FLAG = -Werror 
 
 all:
 	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) -Lmlx -lmlx -framework OpenGL -framework AppKit

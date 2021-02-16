@@ -21,19 +21,7 @@ typedef struct s_size {
     int height;
 } t_size;
 
-typedef struct s_sprite {
-    char *path;
-    t_frame frame;
-    int is_see;
-} t_sprite;
 
-
-
-typedef struct s_box {
-    t_rgb floor;
-    t_rgb sky;
-    t_sprite c_sprite;
-} t_box;
 
 typedef struct s_spawn {
     char dir;
@@ -58,6 +46,18 @@ typedef struct  t_frame {
     int         width;
     int         height;
 }               t_frame;
+
+typedef struct s_sprite {
+    char *path;
+    t_frame frame;
+    int is_see;
+} t_sprite;
+
+typedef struct s_box {
+    t_rgb floor;
+    t_rgb sky;
+    t_sprite c_sprite;
+} t_box;
 
 typedef struct s_tex {
     t_frame tex;
@@ -117,10 +117,6 @@ void set_dir(t_game *game);
 
 t_game parsing(char *file);
 void destroy_game(t_game *game);
-
-
-// getter
-void get_resolution(char *res, t_size *size);
 
 // crasher
 void exit_failure(char *msg);
