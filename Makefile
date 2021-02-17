@@ -20,7 +20,6 @@ FLAG = -Werror
 
 all:
 	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) -Lmlx -lmlx -framework OpenGL -framework AppKit
-	./cub3d map.cub
 
 re: all
 

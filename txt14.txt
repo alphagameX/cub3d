@@ -1,0 +1,2 @@
+Error
+message: Map size is too small

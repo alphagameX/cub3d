@@ -21,7 +21,7 @@ int map_line(char *line) {
     int i = 0;
 
     while(line[i]) {
-        if(line[i] == '1' || line[i] == '2' || line[i] == '0')
+        if(line[i] == '1' || line[i] == '2' || line[i] == '0' || line[i] == ' ')
             return (1);
         i++;
     }
