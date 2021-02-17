@@ -203,8 +203,8 @@ int rendering(t_game *game) {
         int y = 0;
         while(y < game->size.height) {
             if(y < game->render.ray.drawStart) {
-                my_mlx_pixel_put(&game->render.frame, x, y, 0x000344);
-            } else if(y > game->render.ray.drawStart && y < game->render.ray.drawEnd) {
+                my_mlx_pixel_put(&game->render.frame, x, y, game->box.floor.color);
+            } else if(y >= game->render.ray.drawStart && y <= game->render.ray.drawEnd) {
                 int texY = (int)texPos & (game->texture.we.tex.width - 1);
                 texPos += step;
                 char *color;
@@ -219,7 +219,7 @@ int rendering(t_game *game) {
 
                 my_mlx_pixel_put(&game->render.frame, x, y, *(unsigned int *)color);
             } else if(y > game->render.ray.drawEnd) {
-                my_mlx_pixel_put(&game->render.frame, x, y, 0x340434);
+                my_mlx_pixel_put(&game->render.frame, x, y, game->box.sky.color);
             }
             y++;
         }

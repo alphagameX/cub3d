@@ -19,7 +19,7 @@ void create_rgb(t_rgb *rgb, t_game *game, char *color) {
 
     while(str[i]) {
         tmp = ft_atoi(str[i]);
-        if(tmp > 255 && tmp < 0 ) {
+        if(tmp > 255 || tmp < 0 ) {
             ft_putstr("Error\n");
             ft_putstr("One of RGB code is above 255\n");
             destroy_game(game);

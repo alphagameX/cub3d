@@ -7,7 +7,7 @@
 
 #include "../cub3d.h"
 
-int parse_smap(char *smap, t_tmap *map);
+int parse_smap(char *smap, t_game *game);
 void init_moves(t_move *moves);
 t_game new_game();
 
@@ -17,5 +17,8 @@ char *check_is_valid_texture_path(char *texture_path);
 void get_texture(char *line, t_game *game);
 void get_box(char *line, t_game *game);
 void get_resolution(char *res, t_game *game);
+
+//sprite
+void push_sprite(t_game *game, int x, int y);
 
 #endif //CUB3D_PARSING_H

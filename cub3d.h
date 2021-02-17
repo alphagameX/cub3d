@@ -47,9 +47,17 @@ typedef struct  t_frame {
     int         height;
 }               t_frame;
 
+typedef struct s_scoord {
+    int x;
+    int y;
+} t_scoord; 
+
 typedef struct s_sprite {
     char *path;
     t_frame frame;
+    t_scoord *data;
+
+    int nb_sprite;
     int is_see;
 } t_sprite;
 
@@ -142,5 +150,6 @@ int unset_move(int key_code, t_move *moves);
 void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
 int new_image(t_game *game);
 void generate_textures(t_game *game);
+int leave_game(t_game *game); 
 
 #endif //CUB3D_CUB3D_H

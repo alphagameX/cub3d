@@ -42,8 +42,8 @@ t_spawn get_map_spawn(char **t, t_tmap *map) {
         while(t[y][i]) {
             if(t[y][i] == 'N' || t[y][i] == 'S' || t[y][i] == 'W' || t[y][i] == 'E') {
 
-                spawn.x = y;
-                spawn.y  = i;
+                spawn.x = y + 0.5;
+                spawn.y  = i + 0.5;
                 spawn.dir = t[y][i];
 
                 if(t[y - 1][i] == ' ' || t[y + 1][i] == ' ' ||
@@ -88,7 +88,7 @@ void fix_map_whitespace(char **tmap, int width, int height) {
     }
 }
 
-int propagation(char **t, t_tmap map) {
+int propagation(char **t, t_tmap map, t_game *game) {
     int y;
     int x;
 
@@ -97,6 +97,12 @@ int propagation(char **t, t_tmap map) {
     while(y < map.height) {
         x = 0;
         while(t[y][x]) {
+
+            if(t[y][x] == '2')
+            {
+                push_sprite(game, x, y);
+            }
+
 
             if(x == 0 || y == 0 || y == map.height - 1 || x == map.width - 1) {
                 if(t[y][x] == 'X' || t[y][x] == '2' || t[y][x] == '0')
@@ -138,20 +144,20 @@ int propagation(char **t, t_tmap map) {
     return (1);
 }
 
-int parse_smap(char *smap, t_tmap *map) {
+int parse_smap(char *smap, t_game *game) {
     int y = 0;
     int i = 0;
 
-    map->tmap = ft_split(smap, '\n');
-    get_map_size(map);
-    fix_map_whitespace(map->tmap, map->width, map->height);
+    game->map.tmap = ft_split(smap, '\n');
+    get_map_size(&game->map);
+    fix_map_whitespace(game->map.tmap, game->map.width, game->map.height);
 
-    map->spawn = get_map_spawn(map->tmap, map);
+    game->map.spawn = get_map_spawn(game->map.tmap, &game->map);
 
-    if(propagation(map->tmap, *map) == 0) {
-        map->height--;
-        while(map->height >= 0)
-            free(map->tmap[map->height--]);
+    if(propagation(game->map.tmap, game->map, game) == 0) {
+        game->map.height--;
+        while(game->map.height >= 0)
+            free(game->map.tmap[game->map.height--]);
         return (0);
     }
     return (1);

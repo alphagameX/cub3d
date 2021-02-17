@@ -6,7 +6,8 @@ PARSE = parsing/map.c \
 		parsing/setup/init.c \
 		parsing/model/texture.c \
 		parsing/model/box.c \
-		parsing/model/resolution.c
+		parsing/model/resolution.c \
+		parsing/sprite/add.c
 
 RENDER = rendering/render.c \
 		 rendering/core.c \

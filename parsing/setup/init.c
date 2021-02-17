@@ -71,6 +71,7 @@ t_game new_game() {
     init_texture(&game.texture);
 
     game.box.c_sprite.path = NULL;
+    game.box.c_sprite.nb_sprite = 0;
     game.box.floor.is_see = 0;
     game.box.sky.is_see = 0;
 
@@ -93,12 +94,16 @@ void destroy_game(t_game *game) {
     if(game->box.c_sprite.path)
         free(game->box.c_sprite.path);
 
+    
+
     if(game->map.height != 0 && game->map.width != 0) {
         while(game->map.tmap[i]) {
             free(game->map.tmap[i]);
             i++;
         }
     }
+
+    
 
     system("leaks cub3d");
 

@@ -7,6 +7,12 @@ void my_mlx_pixel_put(t_frame *data, int x, int y, int color) {
     *(unsigned int*)dst = color;
 }
 
+int leave_game(t_game *game) {
+   
+    destroy_game(game);
+    return (1);
+}
+
 unsigned int my_mlx_pixel_get(t_frame *data, int x, int y) {
     char    *dst;
 
