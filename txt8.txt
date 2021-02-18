@@ -1,2 +1,0 @@
-Error
-message: Space found at spawn -> y: 1, x: 1

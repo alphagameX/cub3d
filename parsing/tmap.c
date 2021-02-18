@@ -30,25 +30,36 @@ void get_map_size(t_tmap *map) {
         exit_failure("Map size is too small");
 }
 
-t_spawn get_map_spawn(char **t, t_tmap *map) {
+t_spawn get_map_spawn(char **t, t_tmap *map, t_game *game) {
     t_spawn spawn;
     int y;
     int i;
+    int nb;
 
-
+    nb = 0;
     y = 0;
     while(y < map->height) {
         i = 0;
         while(t[y][i]) {
-            if(t[y][i] == 'N' || t[y][i] == 'S' || t[y][i] == 'W' || t[y][i] == 'E') {
 
+            if(t[y][i] == 'N' || t[y][i] == 'S' || t[y][i] == 'W' || t[y][i] == 'E') {
+                nb++;
+
+                if(nb > 1) {
+                    ft_putstr("Error\n");
+                    ft_putstr("There is more than one spawn\n");
+                    destroy_game(game);
+                }
                 spawn.x = y + 0.5;
                 spawn.y  = i + 0.5;
                 spawn.dir = t[y][i];
 
                 if(t[y - 1][i] == ' ' || t[y + 1][i] == ' ' ||
                         t[y][i + 1] == ' ' || t[y][i - 1] == ' ') {
-                    exit_failure(ft_argv_strjoin(4, "Space found at spawn -> y: ", ft_itoa(y), ", x: ", ft_itoa(i)));
+                    ft_putstr("Error\n");
+                    ft_putstr("Space found arround the spawn\n");
+                    ft_printf("y: %d , x: %d\n", y, i);
+                    destroy_game(game);
                 }
 
                 if(t[y + 1][i] == '0')
@@ -98,12 +109,6 @@ int propagation(char **t, t_tmap map, t_game *game) {
         x = 0;
         while(t[y][x]) {
 
-            if(t[y][x] == '2')
-            {
-                push_sprite(game, x, y);
-            }
-
-
             if(x == 0 || y == 0 || y == map.height - 1 || x == map.width - 1) {
                 if(t[y][x] == 'X' || t[y][x] == '2' || t[y][x] == '0')
                     return (0);
@@ -144,6 +149,41 @@ int propagation(char **t, t_tmap map, t_game *game) {
     return (1);
 }
 
+int check_map_char_valid(char **map) {
+    int i;
+    int e;
+
+    i = 0;
+    while(map[i]) {
+        e = 0;
+        while(map[i][e]) {
+            if(map[i][e] != '1' && map[i][e] != '2' && map[i][e] != '0' && map[i][e] != 'N' 
+            &&  map[i][e] != 'S' && map[i][e] != 'W' && map[i][e] != 'E' && map[i][e] != ' ' && map[i][e] != '\n') {
+                return (0);
+            }
+            e++;
+        }    
+        i++;
+    }
+    return (1);
+}
+
+void get_sprite(t_game *game) {
+    int y;
+    int x;
+
+    y = 0;
+    while(game->map.tmap[y]) {
+        x = 0;
+        while(game->map.tmap[y][x]) {
+            if(game->map.tmap[y][x] == '2')
+                push_sprite(game, x, y);
+            x++;
+        }
+        y++; 
+    }
+}
+
 int parse_smap(char *smap, t_game *game) {
     int y = 0;
     int i = 0;
@@ -152,7 +192,17 @@ int parse_smap(char *smap, t_game *game) {
     get_map_size(&game->map);
     fix_map_whitespace(game->map.tmap, game->map.width, game->map.height);
 
-    game->map.spawn = get_map_spawn(game->map.tmap, &game->map);
+    if(check_map_char_valid(game->map.tmap) == 0) {
+        ft_putstr("Error\n");
+        ft_putstr("the .cub map contain too many char type\n");
+        destroy_game(game);
+        return (0);
+    }
+
+    
+    get_sprite(game);
+
+    game->map.spawn = get_map_spawn(game->map.tmap, &game->map, game);
 
     if(propagation(game->map.tmap, game->map, game) == 0) {
         game->map.height--;

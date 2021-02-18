@@ -11,6 +11,15 @@ void get_resolution(char *res, t_game *game) {
         ft_putstr("There is wrong number argument in resolution");
         destroy_game(game);
     } 
+
+    if(game->size.is_see == 0)
+        game->size.is_see += 1;
+    else {
+        ft_putstr("Error\n");
+        ft_putstr("Too many R arguement\n");
+        destroy_game(game);
+    }
+
     game->size.width = ft_atoi(r[1]);
     game->size.height = ft_atoi(r[2]);
     if(game->size.height < 600) {

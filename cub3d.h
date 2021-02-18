@@ -19,6 +19,8 @@ typedef struct s_rgb {
 typedef struct s_size {
     int width;
     int height;
+
+    int is_see;
 } t_size;
 
 
@@ -118,6 +120,8 @@ typedef struct s_game {
 
 
 // init
+char *is_valid_path(char *path);
+
 t_game new_game();
 void set_dir(t_game *game);
 

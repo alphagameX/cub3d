@@ -9,6 +9,13 @@ void debug_map(t_game game) {
     ft_printf("Map width: %d\nMap height: %d\n", game.map.width, game.map.height);
     ft_printf("spawnpoint: y %d, x %d, dir: %c\n", (int)game.map.spawn.y, (int)game.map.spawn.x, game.map.spawn.dir);
 
+    int e = 0;
+
+    while(e < game.box.c_sprite.nb_sprite) {
+        ft_printf("s, x: %d, y: %d\n", game.box.c_sprite.data[e].x, game.box.c_sprite.data[e].y);
+        e++;
+    }
+
     while(i < game.map.height) {
         ft_printf("%s", game.map.tmap[i]);
         ft_putchar('|');
@@ -46,14 +53,19 @@ int is_box(char *line, t_box box) {
 }
 
 t_game parsing(char *file) {
-    int fd = open((const char *)file, O_RDONLY);
+    int fd;
     char *line = NULL;
     char *smap = "";
+
+    if(!file && file == NULL)
+        exit(0);
+
+    fd = open((const char *)file, O_RDONLY);
 
     t_game game = new_game();
     // get option
     while(get_next_line(fd, &line)) {
-        if(line[0] == 'R' && game.size.width == 0 && game.size.width == 0)
+        if(line[0] == 'R')
             get_resolution(line, &game);
         else if(is_texture(line, game.texture))
             get_texture(line, &game);
@@ -67,7 +79,6 @@ t_game parsing(char *file) {
                ft_unleak_strjoin(&smap, "\n");
            }
         }
-
         free(line);
     }
     close(fd);

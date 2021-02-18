@@ -16,7 +16,7 @@ RENDER = rendering/render.c \
 OBJ = main.c $(PARSE) $(RENDER)
 
 LIB = ./super-libft/
-FLAG = -Werror 
+FLAG = -Werror
 
 all:
 	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) -Lmlx -lmlx -framework OpenGL -framework AppKit

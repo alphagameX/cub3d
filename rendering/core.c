@@ -13,13 +13,6 @@ int leave_game(t_game *game) {
     return (1);
 }
 
-unsigned int my_mlx_pixel_get(t_frame *data, int x, int y) {
-    char    *dst;
-
-
-    return (unsigned int)dst;
-}
-
 int new_image(t_game *game) {
     if(game->render.mlx)
         mlx_destroy_image(game->render.mlx, game->render.frame.img);

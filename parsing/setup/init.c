@@ -18,7 +18,7 @@ void set_dir(t_game *game) {
         game->render.ray.planeY = 0.66;
     }
 
-     if(game->map.spawn.dir == 'E') {
+     if(game->map.spawn.dir == 'W') {
         game->render.ray.dirX = 0;
         game->render.ray.dirY = -1;
         game->render.ray.planeX = -0.66;
@@ -32,7 +32,7 @@ void set_dir(t_game *game) {
         game->render.ray.planeY = -0.66;
     }
 
-     if(game->map.spawn.dir == 'W') {
+     if(game->map.spawn.dir == 'E') {
         game->render.ray.dirX = 0;
         game->render.ray.dirY = 1;
         game->render.ray.planeX = 0.66;
@@ -60,6 +60,7 @@ t_game new_game() {
 
     game.size.width = 0;
     game.size.height = 0;
+    game.size.is_see = 0;
 
     game.map.height = 0;
     game.map.width = 0;
@@ -71,6 +72,7 @@ t_game new_game() {
     init_texture(&game.texture);
 
     game.box.c_sprite.path = NULL;
+    game.box.c_sprite.data = NULL;
     game.box.c_sprite.nb_sprite = 0;
     game.box.floor.is_see = 0;
     game.box.sky.is_see = 0;
@@ -94,7 +96,8 @@ void destroy_game(t_game *game) {
     if(game->box.c_sprite.path)
         free(game->box.c_sprite.path);
 
-    
+    if(game->box.c_sprite.nb_sprite > 0)
+        free(game->box.c_sprite.data);
 
     if(game->map.height != 0 && game->map.width != 0) {
         while(game->map.tmap[i]) {
@@ -102,5 +105,25 @@ void destroy_game(t_game *game) {
             i++;
         }
     }
+
+    system("leaks cub3d");
+
     exit(0);
+}
+
+char *is_valid_path(char *path) {
+    int fd;
+    fd = open(path, O_RDONLY);
+    char c;
+
+    if(read(fd, &c, 0) != -1) {
+        if(ft_strncmp(path + (ft_strlen(path) - 4), ".cub", 4) == 0) {
+            return (path);
+        }
+    }
+
+    ft_putstr("Error\n");
+    ft_putstr(".cub path is invalid\n");
+    exit(0);
+
 }

@@ -6,8 +6,15 @@ int main(int argv, char **argc)
 
     int i = 0;
 
-    t_game game = parsing(argc[1]);
+    if(argv < 2)
+        return (0);
+
+   
+
+    t_game game = parsing(is_valid_path(argc[1]));
     // when .cub file is parsed
+
+   
 
     while (i < argv)
     {

@@ -13,6 +13,7 @@ t_game new_game();
 
 void is_valid_texture(t_game *game);
 char *check_is_valid_texture_path(char *texture_path);
+int check_map_char_valid(char **map);
 
 void get_texture(char *line, t_game *game);
 void get_box(char *line, t_game *game);
