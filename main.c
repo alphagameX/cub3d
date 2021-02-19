@@ -4,7 +4,7 @@
 int main(int argv, char **argc)
 {
 
-    int i = 0;
+    int i;
 
     if(argv < 2)
         return (0);
@@ -13,15 +13,26 @@ int main(int argv, char **argc)
 
     t_game game = parsing(is_valid_path(argc[1]));
     // when .cub file is parsed
+    game.render.ray.zbuf = (double *)malloc(sizeof(double) * game.size.width);
 
-   
-
+    i = 2;
     while (i < argv)
     {
         if (ft_strnstr(argc[i], "--debug", ft_strlen(argc[i])))
             debug_map(game);
+        else if(ft_strnstr(argc[i], "--save", ft_strlen(argc[i]))) {
+            ft_putstr("save\n");
+        }
+        else 
+        {  
+            ft_putstr("Error\n");
+            ft_putstr("Unknow parameter found or missing or wrong\n");
+            destroy_game(&game);
+        }
         i++;
     }
+
+    //destroy_game(&game);
 
     // rendering start
 

@@ -46,6 +46,11 @@ void init_texture(t_texture *texture) {
     texture->so.path = NULL;
     texture->we.path = NULL;
 
+    texture->ea.tex.img = NULL;
+    texture->no.tex.img = NULL;
+    texture->so.tex.img = NULL;
+    texture->we.tex.img = NULL;
+
     texture->ea.is_see = 0;
     texture->no.is_see = 0;
     texture->so.is_see = 0;
@@ -71,9 +76,15 @@ t_game new_game() {
     init_moves(&game.render.moves);
     init_texture(&game.texture);
 
+    game.render.ray.zbuf = NULL;
+    game.render.mlx = NULL;
+    game.render.win = NULL;
+
     game.box.c_sprite.path = NULL;
     game.box.c_sprite.data = NULL;
+    game.box.c_sprite.frame.img = NULL;
     game.box.c_sprite.nb_sprite = 0;
+    game.box.c_sprite.is_see = 0;
     game.box.floor.is_see = 0;
     game.box.sky.is_see = 0;
 
@@ -104,7 +115,23 @@ void destroy_game(t_game *game) {
             free(game->map.tmap[i]);
             i++;
         }
+        free(game->map.tmap);
     }
+
+    if(game->texture.ea.tex.img != NULL)
+        mlx_destroy_image(game->render.mlx, game->texture.ea.tex.img);
+    if(game->texture.no.tex.img != NULL)
+        mlx_destroy_image(game->render.mlx, game->texture.no.tex.img);
+    if(game->texture.we.tex.img != NULL)
+        mlx_destroy_image(game->render.mlx, game->texture.we.tex.img);
+    if(game->texture.so.tex.img != NULL)
+        mlx_destroy_image(game->render.mlx, game->texture.so.tex.img);
+    if(game->box.c_sprite.frame.img != NULL)
+        mlx_destroy_image(game->render.mlx, game->box.c_sprite.frame.img);
+    if(game->render.win != NULL)
+        mlx_destroy_window(game->render.mlx, game->render.win);
+
+    free(game->render.ray.zbuf);
 
     system("leaks cub3d");
 

@@ -30,8 +30,8 @@ void push_sprite(t_game *game, int x, int y) {
             new[i].y = game->box.c_sprite.data[i].y;
             i++;
         }
-        new[i].x = x;
-        new[i].y = y;
+        new[i].x = x + 0.5;
+        new[i].y = y + 0.5;
 
         if(game->box.c_sprite.nb_sprite > 0)
             free(game->box.c_sprite.data);
@@ -39,3 +39,4 @@ void push_sprite(t_game *game, int x, int y) {
         game->box.c_sprite.data = new;
     }
 }
+

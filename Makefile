@@ -11,7 +11,9 @@ PARSE = parsing/map.c \
 
 RENDER = rendering/render.c \
 		 rendering/core.c \
-		 rendering/texture.c
+		 rendering/texture.c \
+		 rendering/moves.c \
+		 rendering/turns.c
 
 OBJ = main.c $(PARSE) $(RENDER)
 
@@ -20,6 +22,7 @@ FLAG = -Werror
 
 all:
 	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) -Lmlx -lmlx -framework OpenGL -framework AppKit
+	@./cub3d map.cub --debug
 
 re: all
 

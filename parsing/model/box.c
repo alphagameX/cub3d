@@ -51,7 +51,7 @@ void get_box(char *line, t_game *game) {
         destroy_game(game);
     }
 
-    if(**param =='S')
+    if(**param == 'S')
         check_box_sprite(&game->box.c_sprite, game, param[1]);
     if(**param == 'F') {
         create_rgb(&game->box.floor ,game , param[1]);

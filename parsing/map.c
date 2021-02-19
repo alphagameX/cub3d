@@ -90,9 +90,13 @@ t_game parsing(char *file) {
 
     //map_valid(game);
 
+   
+
     if(parse_smap(smap, &game) == 0)
         exit_failure("Somethings wrong with the map");
     free(smap);
+
+
     return (game);
 }
 

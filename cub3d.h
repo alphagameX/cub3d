@@ -11,6 +11,11 @@
 #include "stdio.h"
 #include "super-libft/libft.h"
 
+typedef struct s_settings {
+    double speed;
+    double colisions;
+} t_settings;
+
 typedef struct s_rgb {
     int color;
     int is_see;
@@ -50,8 +55,8 @@ typedef struct  t_frame {
 }               t_frame;
 
 typedef struct s_scoord {
-    int x;
-    int y;
+    double x;
+    double y;
 } t_scoord; 
 
 typedef struct s_sprite {
@@ -84,6 +89,8 @@ typedef struct s_texture {
 
 typedef struct s_ray {
 
+
+    double *zbuf;
     double angleX;
     int stepX, stepY;
     double rayDirX, rayDirY;
@@ -155,5 +162,13 @@ void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
 int new_image(t_game *game);
 void generate_textures(t_game *game);
 int leave_game(t_game *game); 
+
+// move
+void forward(t_game *game, double colision);
+void backward(t_game *game,  double colision);
+void strate_left(t_game *game, double colision);
+void strate_right(t_game *game, double colision);
+void turn_left(t_game *game, double rot_speed);
+void turn_right(t_game *game, double rot_speed);
 
 #endif //CUB3D_CUB3D_H

@@ -6,6 +6,7 @@ void new_texture(void *mlx, char *path, t_frame *tex) {
 }
 
 void generate_textures(t_game *game) {
+    new_texture(game->render.mlx, game->box.c_sprite.path, &game->box.c_sprite.frame);
     new_texture(game->render.mlx, game->texture.no.path, &game->texture.no.tex);
     new_texture(game->render.mlx, game->texture.so.path, &game->texture.so.tex);
     new_texture(game->render.mlx, game->texture.we.path, &game->texture.we.tex);
