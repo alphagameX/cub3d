@@ -23,6 +23,12 @@ int main(int argv, char **argc)
         else if(ft_strnstr(argc[i], "--save", ft_strlen(argc[i]))) {
             ft_putstr("save\n");
         }
+        else if(ft_strnstr(argc[i], "speed=", ft_strlen(argc[i])))
+            game.settings.move_speed = get_param(&game, argc[i]);
+        else if(ft_strnstr(argc[i], "rot=", ft_strlen(argc[i])))
+            game.settings.rot_speed = get_param(&game, argc[i]);
+        else if(ft_strnstr(argc[i], "hit=", ft_strlen(argc[i])))
+            game.settings.hit_distance = get_param(&game, argc[i]);
         else 
         {  
             ft_putstr("Error\n");

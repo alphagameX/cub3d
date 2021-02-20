@@ -1,4 +1,4 @@
-#include "../parsing.h"
+#include "../../parsing.h"
 
 int is_already_add(t_sprite *sprite, int x, int y) {
     int i ;
@@ -22,21 +22,21 @@ void push_sprite(t_game *game, int x, int y) {
     s.y = y;
     i = 0;
 
-    if(is_already_add(&game->box.c_sprite, x, y) == 0) {
-         if(!(new = malloc(sizeof(t_scoord) * (game->box.c_sprite.nb_sprite + 1))))
+    if(is_already_add(&game->box.sprite, x, y) == 0) {
+         if(!(new = malloc(sizeof(t_scoord) * (game->box.sprite.nb_sprite + 1))))
             destroy_game(game);
-        while(i < game->box.c_sprite.nb_sprite) {
-            new[i].x = game->box.c_sprite.data[i].x;
-            new[i].y = game->box.c_sprite.data[i].y;
+        while(i < game->box.sprite.nb_sprite) {
+            new[i].x = game->box.sprite.data[i].x;
+            new[i].y = game->box.sprite.data[i].y;
             i++;
         }
         new[i].x = x + 0.5;
         new[i].y = y + 0.5;
 
-        if(game->box.c_sprite.nb_sprite > 0)
-            free(game->box.c_sprite.data);
-        game->box.c_sprite.nb_sprite++;
-        game->box.c_sprite.data = new;
+        if(game->box.sprite.nb_sprite > 0)
+            free(game->box.sprite.data);
+        game->box.sprite.nb_sprite++;
+        game->box.sprite.data = new;
     }
 }
 

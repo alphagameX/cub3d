@@ -11,22 +11,11 @@
 #include "stdio.h"
 #include "super-libft/libft.h"
 
-#define UP 122
-#define DOWN 115
-#define LEFT 100
-#define RIGHT 113
-#define TURN_RIGHT 65361
-#define TURN_LEFT 65363
-#define ECHAP 65307
-
-
-#define MOVE_SPEED 0.05
-#define ROT_SPEED 0.02
-#define HIT_DIST 0.3
 
 typedef struct s_settings {
-    double speed;
-    double colisions;
+    double move_speed;
+    double hit_distance;
+    double rot_speed;
 } t_settings;
 
 typedef struct s_rgb {
@@ -77,6 +66,16 @@ typedef struct s_sprite {
     t_frame frame;
     t_scoord *data;
 
+    double invDet;
+    int spriteScreenX;
+    int spriteHeight;
+    int spriteWidth;
+
+    int drawStartY;
+    int drawStartX;
+    int drawEndY;
+    int drawEndX;
+
     int nb_sprite;
     int is_see;
 } t_sprite;
@@ -84,7 +83,7 @@ typedef struct s_sprite {
 typedef struct s_box {
     t_rgb floor;
     t_rgb sky;
-    t_sprite c_sprite;
+    t_sprite sprite;
 } t_box;
 
 typedef struct s_tex {
@@ -136,11 +135,13 @@ typedef struct s_game {
     t_box box;
     t_tmap map;
     t_render render;
+    t_settings settings;
 } t_game;
 
 
 // init
 char *is_valid_path(char *path);
+double get_param(t_game *game, char *param);
 
 t_game new_game();
 void set_dir(t_game *game);
@@ -166,6 +167,22 @@ unsigned int my_mlx_pixel_get(t_frame *data, int x, int y);
 // render
 int rendering(t_game *game);
 int move(t_game *game);
+char *get_color(char **addr,int width,int y, int x);
+
+// ray
+void rayDir(t_game *game, int mapX, int mapY);
+void set_start_ray(int x, t_game *game);
+void dda(t_game *game, int *side);
+void lineHeight(t_game *game);
+
+// wall
+void wall_casting(t_game *game, int side, int x);
+
+// sprite
+int relative_distance(t_spawn p, t_scoord s);
+void swap_sprite(t_scoord *src, t_scoord *dst);
+void sortSprite(t_sprite *sprite, t_spawn spawn);
+void sprite_casting(t_game *game);
 
 int set_move(int key_code, t_move *moves);
 int unset_move(int key_code, t_move *moves);

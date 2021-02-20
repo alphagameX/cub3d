@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "../../cub3d.h"
 
 void turn_left(t_game *game, double rot_speed) {
     double oldDirX; 

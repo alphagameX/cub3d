@@ -17,6 +17,7 @@ void create_rgb(t_rgb *rgb, t_game *game, char *color) {
     int i = 0;
     int tmp;
 
+    rgb->is_see++;
     while(str[i]) {
         tmp = ft_atoi(str[i]);
         if(tmp > 255 || tmp < 0 ) {
@@ -32,6 +33,11 @@ void create_rgb(t_rgb *rgb, t_game *game, char *color) {
         destroy_game(game);
     }
 
+    if(rgb->is_see > 1) {
+        ft_putstr("Error\n");
+        ft_putstr("There is too many RGB flag\n");
+        destroy_game(game);
+    }
     rgb->color = (ft_atoi(str[0]) << 16 | ft_atoi(str[1]) << 8 | ft_atoi(str[2]));
     i = 0;
     while(str[i])
@@ -52,7 +58,7 @@ void get_box(char *line, t_game *game) {
     }
 
     if(**param == 'S')
-        check_box_sprite(&game->box.c_sprite, game, param[1]);
+        check_box_sprite(&game->box.sprite, game, param[1]);
     if(**param == 'F') {
         create_rgb(&game->box.floor ,game , param[1]);
         free(param[1]);

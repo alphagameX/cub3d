@@ -5,14 +5,14 @@ void debug_map(t_game game) {
 
     ft_printf("max width: %dpx\nmax height: %dpx\n", game.size.width, game.size.height);
     ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", game.texture.no.path, game.texture.so.path, game.texture.we.path, game.texture.ea.path);
-    //ft_printf("Sprite: %s\nFloor color: %s\nSky color: %s\n", game.box.c_sprite, game.box., game.box.c_sky);
+    //ft_printf("Sprite: %s\nFloor color: %s\nSky color: %s\n", game.box.sprite, game.box., game.box.c_sky);
     ft_printf("Map width: %d\nMap height: %d\n", game.map.width, game.map.height);
     ft_printf("spawnpoint: y %d, x %d, dir: %c\n", (int)game.map.spawn.y, (int)game.map.spawn.x, game.map.spawn.dir);
 
     int e = 0;
 
-    while(e < game.box.c_sprite.nb_sprite) {
-        ft_printf("s, x: %d, y: %d\n", game.box.c_sprite.data[e].x, game.box.c_sprite.data[e].y);
+    while(e < game.box.sprite.nb_sprite) {
+        ft_printf("s, x: %d, y: %d\n", (int)game.box.sprite.data[e].x, (int)game.box.sprite.data[e].y);
         e++;
     }
 
@@ -24,16 +24,20 @@ void debug_map(t_game game) {
     }
 }
 
-int map_line(char *line) {
-    int i = 0;
-
-    while(line[i]) {
-        if(line[i] == '1' || line[i] == '2' || line[i] == '0' || line[i] == ' ')
-            return (1);
-        i++;
+char *check_is_valid_texture_path(char *texture_path) {
+    int fd;
+    if(strstr(texture_path, ".xpm") != NULL) {
+        fd = open((const char *)texture_path, O_RDONLY);
+        if(fd == -1) {
+            return (NULL);
+        }
+        else
+            return (texture_path);
+    } else {
+        return (NULL);
     }
-    return (0);
 }
+
 
 int is_texture(char *line, t_texture texture) {
     if(((line[0] == 'N' && line[1] == 'O')) ||
@@ -59,9 +63,7 @@ t_game parsing(char *file) {
 
     if(!file && file == NULL)
         exit(0);
-
     fd = open((const char *)file, O_RDONLY);
-
     t_game game = new_game();
     // get option
     while(get_next_line(fd, &line)) {
@@ -69,34 +71,20 @@ t_game parsing(char *file) {
             get_resolution(line, &game);
         else if(is_texture(line, game.texture))
             get_texture(line, &game);
-        else if(is_box(line, game.box)) {
+        else if(is_box(line, game.box))
             get_box(line, &game);
-        }
-        // get map
         else {
-           if(map_line(line)) {
-               ft_unleak_strjoin(&smap, line);
-               ft_unleak_strjoin(&smap, "\n");
-           }
+            ft_unleak_strjoin(&smap, line);
+            ft_unleak_strjoin(&smap, "\n");
         }
         free(line);
     }
     close(fd);
-    if(map_line(line))
-        ft_unleak_strjoin(&smap, line);
+    ft_unleak_strjoin(&smap, line);
     free(line);
-
     is_valid_texture(&game);
-
-    //map_valid(game);
-
-   
-
-    if(parse_smap(smap, &game) == 0)
-        exit_failure("Somethings wrong with the map");
+    parse_smap(smap, &game);
     free(smap);
-
-
     return (game);
 }
 

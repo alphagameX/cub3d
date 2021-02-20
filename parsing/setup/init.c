@@ -67,6 +67,10 @@ t_game new_game() {
     game.size.height = 0;
     game.size.is_see = 0;
 
+    game.settings.move_speed = 0.1;
+    game.settings.hit_distance = 0.3;
+    game.settings.rot_speed = 0.1;
+
     game.map.height = 0;
     game.map.width = 0;
 
@@ -80,11 +84,11 @@ t_game new_game() {
     game.render.mlx = NULL;
     game.render.win = NULL;
 
-    game.box.c_sprite.path = NULL;
-    game.box.c_sprite.data = NULL;
-    game.box.c_sprite.frame.img = NULL;
-    game.box.c_sprite.nb_sprite = 0;
-    game.box.c_sprite.is_see = 0;
+    game.box.sprite.path = NULL;
+    game.box.sprite.data = NULL;
+    game.box.sprite.frame.img = NULL;
+    game.box.sprite.nb_sprite = 0;
+    game.box.sprite.is_see = 0;
     game.box.floor.is_see = 0;
     game.box.sky.is_see = 0;
 
@@ -104,11 +108,11 @@ void destroy_game(t_game *game) {
     if(game->texture.no.path)
         free(game->texture.no.path);
 
-    if(game->box.c_sprite.path)
-        free(game->box.c_sprite.path);
+    if(game->box.sprite.path)
+        free(game->box.sprite.path);
 
-    if(game->box.c_sprite.nb_sprite > 0)
-        free(game->box.c_sprite.data);
+    if(game->box.sprite.nb_sprite > 0)
+        free(game->box.sprite.data);
 
     if(game->map.height != 0 && game->map.width != 0) {
         while(game->map.tmap[i]) {
@@ -126,33 +130,17 @@ void destroy_game(t_game *game) {
         mlx_destroy_image(game->render.mlx, game->texture.we.tex.img);
     if(game->texture.so.tex.img != NULL)
         mlx_destroy_image(game->render.mlx, game->texture.so.tex.img);
-    if(game->box.c_sprite.frame.img != NULL)
-        mlx_destroy_image(game->render.mlx, game->box.c_sprite.frame.img);
+    if(game->box.sprite.frame.img != NULL)
+        mlx_destroy_image(game->render.mlx, game->box.sprite.frame.img);
     if(game->render.win != NULL)
         mlx_destroy_window(game->render.mlx, game->render.win);
 
     free(game->render.ray.zbuf);
 
-    mlx_destroy_display(game->render.mlx);
+    //mlx_destroy_display(game->render.mlx);
 
     //system("leaks cub3d");
 
     exit(0);
 }
 
-char *is_valid_path(char *path) {
-    int fd;
-    fd = open(path, O_RDONLY);
-    char c;
-
-    if(read(fd, &c, 0) != -1) {
-        if(ft_strncmp(path + (ft_strlen(path) - 4), ".cub", 4) == 0) {
-            return (path);
-        }
-    }
-
-    ft_putstr("Error\n");
-    ft_putstr(".cub path is invalid\n");
-    exit(0);
-
-}
