@@ -1,5 +1,21 @@
 #include "../../parsing.h"
 
+void get_sprite(t_game *game) {
+    int y;
+    int x;
+
+    y = 0;
+    while(game->map.tmap[y]) {
+        x = 0;
+        while(game->map.tmap[y][x]) {
+            if(game->map.tmap[y][x] == '2')
+                push_sprite(game, x, y);
+            x++;
+        }
+        y++; 
+    }
+}
+
 int is_already_add(t_sprite *sprite, int x, int y) {
     int i ;
 

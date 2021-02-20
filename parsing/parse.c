@@ -1,25 +1,12 @@
 #include "parsing.h"
 
-void debug_map(t_game game) {
-    int i = 0;
+void free_array(char **r) {
+    int i;
 
-    ft_printf("max width: %dpx\nmax height: %dpx\n", game.size.width, game.size.height);
-    ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", game.texture.no.path, game.texture.so.path, game.texture.we.path, game.texture.ea.path);
-    ft_printf("Sprite: %s\nFloor color: %x\nSky color: %x\n", game.box.sprite.path, game.box.floor.color, game.box.sky.color);
-    ft_printf("Map width: %d\nMap height: %d\n", game.map.width, game.map.height);
-    ft_printf("spawnpoint: y %d, x %d, dir: %c\n", (int)game.map.spawn.y, (int)game.map.spawn.x, game.map.spawn.dir);
     i = 0;
-    while(i < game.box.sprite.nb_sprite) {
-        ft_printf("s, x: %d, y: %d\n", (int)game.box.sprite.data[i].x, (int)game.box.sprite.data[i].y);
-        i++;
-    }
-    i = 0;
-    while(i < game.map.height) {
-        ft_printf("%s", game.map.tmap[i]);
-        ft_putchar('|');
-        ft_putchar('\n');
-        i++;
-    }
+    while(r[i])
+        free(r[i++]);
+    free(r);
 }
 
 char *check_is_valid_texture_path(char *texture_path) {

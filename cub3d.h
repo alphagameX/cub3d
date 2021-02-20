@@ -6,11 +6,17 @@
 #define CUB3D_CUB3D_H
 
 #include <fcntl.h>
-#include "mlx/mlx.h"
 #include "math.h"
 #include "stdio.h"
 #include "super-libft/libft.h"
 
+#if OS == 0
+#include "mlx_linux/mlx.h"
+#endif
+
+#if OS == 1
+#include "mlx/mlx.h"
+#endif 
 
 typedef struct s_settings {
     double move_speed;

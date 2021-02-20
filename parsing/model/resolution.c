@@ -1,13 +1,6 @@
 #include "../parsing.h"
 
-void free_r(char **r) {
-    int i;
 
-    i = 0;
-    while(r[i])
-        free(r[i++]);
-    free(r);
-}
 
 void get_resolution(char *res, t_game *game) {
     int i = 0;
@@ -18,7 +11,7 @@ void get_resolution(char *res, t_game *game) {
     if(i != 3) {
         ft_putstr("Error\n");
         ft_putstr("There is wrong number argument in resolution\n");
-        free_r(r);
+        free_array(r);
         destroy_game(game);
     } 
 
@@ -27,7 +20,7 @@ void get_resolution(char *res, t_game *game) {
     else {
         ft_putstr("Error\n");
         ft_putstr("Too many R arguement\n");
-        free_r(r);
+        free_array(r);
         destroy_game(game);
     }
 
@@ -41,7 +34,7 @@ void get_resolution(char *res, t_game *game) {
         ft_putstr("LOG: width is lower than min width, the width is now 800\n");
         game->size.width = 800;
     }
-    free_r(r);
+    free_array(r);
 }
 
 

@@ -25,6 +25,8 @@
         "vector": "cpp",
         "parsing.h": "c",
         "cub3d.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "fcntl.h": "c",
+        "mlx.h": "c"
     }
 }

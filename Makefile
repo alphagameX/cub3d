@@ -10,7 +10,7 @@ SPRITE = $(addprefix sprite/, add.c sort.c)
 MODEL = $(TEXTURE) $(MAP) $(SPRITE)
 
 MODELS = $(addprefix parsing/model/, $(MODEL))
-SETUP = $(addprefix parsing/setup/, init.c param.c)
+SETUP = $(addprefix parsing/setup/, init.c param.c all.c)
 PARSE = parsing/parse.c $(SETUP) $(MODELS)
 
 #RENDER
@@ -32,7 +32,7 @@ TURN_LEFT = 65361
 
 #OS CHECK
 ifeq ($(UNAME), Linux)
-TARGET = -L./mlx -l mlx -L/usr/lib -lXext -lX11 -I/usr/include -lm -lz  -O3
+TARGET = -L./mlx -l mlx -L/usr/lib -lXext -lX11 -I/usr/include -lm -lz  -O3 
 UP = 122
 DOWN = 115
 LEFT = 100
@@ -40,9 +40,12 @@ RIGHT = 113
 TURN_RIGHT = 65361
 TURN_LEFT = 65363
 ECHAP = 65307
+OS = 0
+OBJ += parsing/setup/destroy_linux.c
 endif
 
 ifeq ($(UNAME), Darwin)
+TARGET = -Lmlx -lmlx -framework OpenGL -framework AppKit 
 UP = 13
 DOWN = 1
 LEFT = 2
@@ -50,7 +53,8 @@ RIGHT = 0
 TURN_RIGHT = 123
 TURN_LEFT = 124
 ECHAP = 53
-TARGET = -Lmlx -lmlx -framework OpenGL -framework AppKit
+OS = 1
+OBJ += parsing/setup/destroy_osx.c
 endif
 
 #CONTROL DEFINE
@@ -58,7 +62,7 @@ KEY= -D UP=$(UP) -D DOWN=$(DOWN) -D RIGHT=$(RIGHT) -D LEFT=$(LEFT) -D TURN_RIGHT
 
 
 all:
-	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) $(TARGET) $(KEY)
+	@gcc $(OBJ) -D OS=$(OS) -L $(LIB) -l ft -o $(NAME) $(FLAG) $(TARGET) $(KEY) 
 	@echo "Compilation done!"
 
 re: fclean
@@ -68,7 +72,7 @@ re: fclean
 	@make all
 
 run:
-	@./$(NAME) $(CUB) --debug speed=1 rot=1 hit=3
+	@./$(NAME) $(CUB) --debug speed=10 rot=10 hit=30
 	
 clean: 
 	@rm -rf $(NAME)
