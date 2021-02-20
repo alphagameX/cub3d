@@ -45,19 +45,19 @@ int move(t_game *game) {
 
     i = 0;
     while(i < game->render.moves.nb_move && game->render.moves.wait_mode[i] != -1) {
-        if(game->render.moves.wait_mode[i] == 13)
-           forward(game, 0.3);
-        if(game->render.moves.wait_mode[i] == 1)
-            backward(game, 0.3);
-        if(game->render.moves.wait_mode[i] == 2)
-           strate_left(game, 0.3);
-        if(game->render.moves.wait_mode[i] == 0)
-           strate_right(game, 0.3);
-        if(game->render.moves.wait_mode[i] == 124)
-          turn_left(game, 0.08);
-        if (game->render.moves.wait_mode[i] == 123)
-          turn_right(game, 0.08);
-        if(game->render.moves.wait_mode[i] == 53)
+        if(game->render.moves.wait_mode[i] == UP)
+           forward(game, HIT_DIST);
+        if(game->render.moves.wait_mode[i] == DOWN)
+            backward(game, HIT_DIST);
+        if(game->render.moves.wait_mode[i] == LEFT)
+           strate_left(game, HIT_DIST);
+        if(game->render.moves.wait_mode[i] == RIGHT)
+           strate_right(game, HIT_DIST);
+        if(game->render.moves.wait_mode[i] == TURN_LEFT)
+          turn_left(game, ROT_SPEED);
+        if (game->render.moves.wait_mode[i] == TURN_RIGHT)
+          turn_right(game, ROT_SPEED);
+        if(game->render.moves.wait_mode[i] == ECHAP)
             destroy_game(game);
         i++;
     }

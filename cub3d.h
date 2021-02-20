@@ -11,6 +11,19 @@
 #include "stdio.h"
 #include "super-libft/libft.h"
 
+#define UP 122
+#define DOWN 115
+#define LEFT 100
+#define RIGHT 113
+#define TURN_RIGHT 65361
+#define TURN_LEFT 65363
+#define ECHAP 65307
+
+
+#define MOVE_SPEED 0.05
+#define ROT_SPEED 0.02
+#define HIT_DIST 0.3
+
 typedef struct s_settings {
     double speed;
     double colisions;

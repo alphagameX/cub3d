@@ -16,15 +16,50 @@ RENDER = rendering/render.c \
 		 rendering/turns.c
 
 OBJ = main.c $(PARSE) $(RENDER)
+UNAME=$(shell uname)
 
 LIB = ./super-libft/
 FLAG = -Werror
 
+UP = 122
+DOWN = 115
+LEFT = 100
+RIGHT = 113
+TURN_RIGHT = 65363
+TURN_LEFT = 65361
+
+
+ifeq ($(UNAME), Linux)
+TARGET = -L./mlx -l mlx -L/usr/lib -lXext -lX11 -I/usr/include -lm -lz  -O3
+UP = 122
+DOWN = 115
+LEFT = 100
+RIGHT = 113
+TURN_RIGHT = 65361
+TURN_LEFT = 65363
+ECHAP = 65307
+endif
+
+ifeq ($(UNAME), Darwin)
+TARGET = -Lmlx -lmlx -framework OpenGL -framework AppKit
+UP = 122
+DOWN = 115
+LEFT = 100
+RIGHT = 113
+TURN_RIGHT = 65361
+TURN_LEFT = 65363
+ECHAP = 65307
+endif
+
 all:
-	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) -Lmlx -lmlx -framework OpenGL -framework AppKit
-	@./cub3d map.cub --debug
+	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) $(TARGET)
+	@./cub3d map.cub
 
 re: all
+
+linux:
+	@gcc $(OBJ) -L $(LIB) -l ft -o $(NAME) $(FLAG) 
+
 
 leak:
 	valgrind ./$(NAME) --leak-check=full -v
