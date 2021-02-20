@@ -20,6 +20,7 @@ char *is_valid_path(char *path) {
 double get_param(t_game *game, char *param) {
     char **r;
     int i;
+    int res;
 
     i = 0;
     r = ft_split(param, '=');
@@ -28,8 +29,16 @@ double get_param(t_game *game, char *param) {
     if(i != 2) {
         ft_putstr("Error\n");
         ft_printf("%s parameter is wrong\n", r[0]);
+        i = 0;
+        while(r[i])
+            free(r[i++]);
+        free(r);
         destroy_game(game);
     }
-
-    return ((double)ft_atoi(r[i - 1]) / 100);
+    res = ft_atoi(r[1]);
+    i = 0;
+    while(r[i])
+        free(r[i++]);
+    free(r);
+    return ((double)res / 100);
 }

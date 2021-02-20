@@ -27,17 +27,15 @@ $(NAME): $(OBJS)
 %.o:%.c $(INC)
 	@$(CC) $(CFLAGS) -I./$(INC) -o $@ -c $< 
 
-compil:
-	@make clean
-	@$(CC) -o $(OUTPUT) -L. -l ft main.c
-	@./$(OUTPUT)
-
 clean:
+	@echo "Cleaning libft"
 	@rm -f $(OBJS)
 
 fclean: clean
 	@rm -f $(NAME) a.out
 
-re: fclean all
+re: fclean
+	@echo "Recompliling libft"
+	@make all
 
 .PHONY: clean fclean all re

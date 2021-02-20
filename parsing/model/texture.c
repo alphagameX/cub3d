@@ -47,6 +47,7 @@ void get_texture(char *line, t_game *game) {
         ft_printf("Wrong parameter in %s\n", param[0]);
         while(i > 0)
             free(param[i--]);
+        free(param);
         destroy_game(game);
     }
     if(param[0][0] == 'N' && param[0][1] == 'O')

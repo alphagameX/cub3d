@@ -136,10 +136,9 @@ void destroy_game(t_game *game) {
         mlx_destroy_window(game->render.mlx, game->render.win);
 
     free(game->render.ray.zbuf);
-
+    free(game->render.mlx);
     //mlx_destroy_display(game->render.mlx);
-
-    //system("leaks cub3d");
+    system("leaks cub3d");
 
     exit(0);
 }

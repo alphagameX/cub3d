@@ -52,9 +52,6 @@ void get_sprite(t_game *game) {
 }
 
 void parse_smap(char *smap, t_game *game) {
-    int y = 0;
-    int i = 0;
-
     game->map.tmap = ft_split(smap, '\n');
     get_map_size(game);
     fix_map_whitespace(game->map.tmap, game->map.width, game->map.height);
@@ -65,7 +62,6 @@ void parse_smap(char *smap, t_game *game) {
     }
     get_sprite(game);
     game->map.spawn = get_map_spawn(game->map.tmap, &game->map, game);
-    write(1, "c", 1);
     if(propagation(game->map.tmap, game->map, game) == 0) {
         game->map.height--;
         while(game->map.height >= 0)

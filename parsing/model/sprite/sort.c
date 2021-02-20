@@ -23,10 +23,6 @@ void swap_sprite(t_scoord *src, t_scoord *dst) {
 void sortSprite(t_sprite *sprite, t_spawn spawn) {
     int i = 0;
     int e;
-    t_scoord tmp;
-
-    double posX = spawn.x;
-    double posY = spawn.y;
 
     while(i < sprite->nb_sprite) {
         e = i + 1;

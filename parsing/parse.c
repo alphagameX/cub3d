@@ -5,17 +5,15 @@ void debug_map(t_game game) {
 
     ft_printf("max width: %dpx\nmax height: %dpx\n", game.size.width, game.size.height);
     ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", game.texture.no.path, game.texture.so.path, game.texture.we.path, game.texture.ea.path);
-    //ft_printf("Sprite: %s\nFloor color: %s\nSky color: %s\n", game.box.sprite, game.box., game.box.c_sky);
+    ft_printf("Sprite: %s\nFloor color: %x\nSky color: %x\n", game.box.sprite.path, game.box.floor.color, game.box.sky.color);
     ft_printf("Map width: %d\nMap height: %d\n", game.map.width, game.map.height);
     ft_printf("spawnpoint: y %d, x %d, dir: %c\n", (int)game.map.spawn.y, (int)game.map.spawn.x, game.map.spawn.dir);
-
-    int e = 0;
-
-    while(e < game.box.sprite.nb_sprite) {
-        ft_printf("s, x: %d, y: %d\n", (int)game.box.sprite.data[e].x, (int)game.box.sprite.data[e].y);
-        e++;
+    i = 0;
+    while(i < game.box.sprite.nb_sprite) {
+        ft_printf("s, x: %d, y: %d\n", (int)game.box.sprite.data[i].x, (int)game.box.sprite.data[i].y);
+        i++;
     }
-
+    i = 0;
     while(i < game.map.height) {
         ft_printf("%s", game.map.tmap[i]);
         ft_putchar('|');
@@ -39,7 +37,7 @@ char *check_is_valid_texture_path(char *texture_path) {
 }
 
 
-int is_texture(char *line, t_texture texture) {
+int is_texture(char *line) {
     if(((line[0] == 'N' && line[1] == 'O')) ||
        ((line[0] == 'S' && line[1] == 'O')) ||
        ((line[0] == 'W' && line[1] == 'E')) ||
@@ -48,7 +46,7 @@ int is_texture(char *line, t_texture texture) {
     return (0);
 }
 
-int is_box(char *line, t_box box) {
+int is_box(char *line) {
     if(((line[0] == 'S' && line[1] == ' ') ) ||
        ((line[0] == 'F' && line[1] == ' ')) ||
        ((line[0] == 'C' && line[1] == ' ') ))
@@ -66,12 +64,13 @@ t_game parsing(char *file) {
     fd = open((const char *)file, O_RDONLY);
     t_game game = new_game();
     // get option
+
     while(get_next_line(fd, &line)) {
         if(line[0] == 'R')
             get_resolution(line, &game);
-        else if(is_texture(line, game.texture))
+        else if(is_texture(line))
             get_texture(line, &game);
-        else if(is_box(line, game.box))
+        else if(is_box(line))
             get_box(line, &game);
         else {
             ft_unleak_strjoin(&smap, line);
@@ -82,6 +81,7 @@ t_game parsing(char *file) {
     close(fd);
     ft_unleak_strjoin(&smap, line);
     free(line);
+
     is_valid_texture(&game);
     parse_smap(smap, &game);
     free(smap);
