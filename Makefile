@@ -32,7 +32,7 @@ TURN_LEFT = 65361
 
 #OS CHECK
 ifeq ($(UNAME), Linux)
-TARGET = -L./mlx -l mlx -L/usr/lib -lXext -lX11 -I/usr/include -lm -lz  -O3 
+TARGET = -L./mlx_linux -l mlx -L/usr/lib -lXext -lX11 -I/usr/include -lm -lz  -O3 
 UP = 122
 DOWN = 115
 LEFT = 100
@@ -72,7 +72,7 @@ re: fclean
 	@make all
 
 run:
-	@./$(NAME) $(CUB) --debug speed=10 rot=10 hit=30
+	@./$(NAME) $(CUB) --debug speed=1 rot=1 hit=3
 	
 clean: 
 	@rm -rf $(NAME)

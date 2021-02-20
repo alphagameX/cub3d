@@ -37,6 +37,7 @@ void init_box(t_box *box) {
 }
 
 void init_all(t_game *game) {
+    game->render.frame.img = NULL;
     game->size.width = 0;
     game->size.height = 0;
     game->size.is_see = 0;

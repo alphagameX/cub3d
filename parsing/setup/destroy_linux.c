@@ -24,28 +24,24 @@ void free_image(t_game *game) {
         mlx_destroy_image(game->render.mlx, game->texture.so.tex.img);
     if(game->box.sprite.frame.img != NULL)
         mlx_destroy_image(game->render.mlx, game->box.sprite.frame.img);
+    if(game->render.frame.img != NULL)
+        mlx_destroy_image(game->render.mlx, game->render.frame.img);
 }
 
 void destroy_game(t_game *game) {
-    int i;
-
     free_texture(game);
-    i = 0;
     if(game->render.ray.zbuf)
         free(game->render.ray.zbuf);
     if(game->box.sprite.nb_sprite > 0)
         free(game->box.sprite.data);
-    if(game->map.height != 0 && game->map.width != 0) {
-        while(game->map.tmap[i]) {
-            free(game->map.tmap[i]);
-            i++;
-        }
-        free(game->map.tmap);
-    }
+    if(game->map.height != 0 && game->map.width != 0)
+        free_array(game->map.tmap);
     free_image(game);
-    if(game->render.win != NULL)
+    if(game->render.win != NULL) {
         mlx_destroy_window(game->render.mlx, game->render.win);
-    mlx_destroy_display(game->render.mlx);
+        mlx_destroy_display(game->render.mlx);
+        free(game->render.mlx);
+    }
     exit(0);
 }
 
