@@ -1,7 +1,5 @@
 #include "../parsing.h"
 
-
-
 void set_one_dir(t_ray *ray, int dirX, int dirY, double planeX, double planeY) {
     ray->dirX = dirX;
     ray->dirY = dirY;

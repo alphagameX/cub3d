@@ -29,10 +29,7 @@ void free_image(t_game *game) {
 }
 
 void destroy_game(t_game *game) {
-    int i;
-
     free_texture(game);
-    i = 0;
     if(game->render.ray.zbuf)
         free(game->render.ray.zbuf);
     if(game->box.sprite.nb_sprite > 0)
