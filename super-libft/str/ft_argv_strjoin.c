@@ -1,17 +1,15 @@
 #include "../libft.h"
 #include <stdarg.h>
 
-char *ft_argv_strjoin(int count, ...) {
+void ft_argv_strjoin(char **dst, int count, ...) {
     va_list list;
-    int i = 0;
-    char *joined = "";
+    int i;
 
+    i = 0;
     va_start(list, count);
     while (i < count)
     {
-        ft_unleak_strjoin(&joined, va_arg(list, char *));
+        ft_unleak_strjoin(dst, va_arg(list, char *));
         i++;
     }
-    va_end(list);
-    return (joined);
 }

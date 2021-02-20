@@ -54,17 +54,17 @@ int is_box(char *line) {
     return (0);
 }
 
+
 t_game parsing(char *file) {
     int fd;
     char *line = NULL;
-    char *smap = "";
+    char *smap = NULL;
+    t_game game;
 
     if(!file && file == NULL)
         exit(0);
     fd = open((const char *)file, O_RDONLY);
-    t_game game = new_game();
-    // get option
-
+    game = new_game();
     while(get_next_line(fd, &line)) {
         if(line[0] == 'R')
             get_resolution(line, &game);
@@ -72,16 +72,13 @@ t_game parsing(char *file) {
             get_texture(line, &game);
         else if(is_box(line))
             get_box(line, &game);
-        else {
-            ft_unleak_strjoin(&smap, line);
-            ft_unleak_strjoin(&smap, "\n");
-        }
+        else
+            ft_argv_strjoin(&smap, 2, line, "\n");
         free(line);
     }
     close(fd);
     ft_unleak_strjoin(&smap, line);
     free(line);
-
     is_valid_texture(&game);
     parse_smap(smap, &game);
     free(smap);

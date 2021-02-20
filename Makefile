@@ -68,8 +68,8 @@ re: fclean
 	@make all
 
 run:
-	@./$(NAME) $(CUB) --debug speed=10 rot=10 hit=30
-
+	@./$(NAME) $(CUB) --debug speed=1 rot=1 hit=3
+	
 clean: 
 	@rm -rf $(NAME)
 	@echo "Cleanig cub3d"

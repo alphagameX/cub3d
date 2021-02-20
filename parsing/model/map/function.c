@@ -34,7 +34,7 @@ void fix_map_whitespace(char **tmap, int width, int height) {
         i = ft_strlen(tmap[tmp]);
         if(i < width) {
             freed = fill_space(width - i);
-            ft_unleak_strjoin(&tmap[tmp], freed);
+            //ft_unleak_strjoin(&tmap[tmp], freed);
             free(freed);
         }
         tmp++;

@@ -13,15 +13,10 @@ int is_already_add(t_sprite *sprite, int x, int y) {
 }
 
 void push_sprite(t_game *game, int x, int y) {
-
-    t_scoord s;
     t_scoord *new;
     int i;
 
-    s.x = x;
-    s.y = y;
     i = 0;
-
     if(is_already_add(&game->box.sprite, x, y) == 0) {
          if(!(new = malloc(sizeof(t_scoord) * (game->box.sprite.nb_sprite + 1))))
             destroy_game(game);

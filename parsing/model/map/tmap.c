@@ -5,6 +5,7 @@ void get_map_size(t_game *game) {
 
     // determine height and width for map
     while(game->map.tmap[game->map.height]) {
+        ft_printf("%s\n", game->map.tmap[game->map.height]);
         if((tmp = ft_strlen(game->map.tmap[game->map.height])) > game->map.width)
             game->map.width = tmp;
         game->map.height += 1;
@@ -54,7 +55,7 @@ void get_sprite(t_game *game) {
 void parse_smap(char *smap, t_game *game) {
     game->map.tmap = ft_split(smap, '\n');
     get_map_size(game);
-    fix_map_whitespace(game->map.tmap, game->map.width, game->map.height);
+    //fix_map_whitespace(game->map.tmap, game->map.width, game->map.height);
     if(check_map_char_valid(game->map.tmap) == 0) {
         ft_putstr("Error\n");
         ft_putstr("the .cub map contain too many char type\n");
