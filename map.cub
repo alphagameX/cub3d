@@ -1,4 +1,4 @@
-R 1280 -720
+R 1280 720
 NO ./srcs/eagle.xpm
 SO ./srcs/greystone.xpm
 WE ./srcs/mossy.xpm

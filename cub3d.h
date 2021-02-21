@@ -219,5 +219,8 @@ void turn_left(t_game *game, double rot_speed);
 void turn_right(t_game *game, double rot_speed);
 
 void	file_bmp(t_game *game);
+void register_hook(t_game *game);
+void arguement_detection(int argv, char **argc, t_game *game);
+void start(t_game *game);
 
 #endif //CUB3D_CUB3D_H
