@@ -1,6 +1,20 @@
 #include "../parsing.h"
 
+void check_min_and_max_size(t_game *game, char **r) {
+    if(game->size.width < 0) {
+        ft_putstr("Error\n");
+        ft_printf("%dpx width is too low or too hight for screen resolution\n", game->size.width);
+        free_array(r);
+        destroy_game(game);
+    }
 
+     if(game->size.height < 0) {
+        ft_putstr("Error\n");
+        ft_printf("%dpx height is too low or too hight for screen resolution\n", game->size.height);
+        free_array(r);
+        destroy_game(game);
+    }
+}
 
 void get_resolution(char *res, t_game *game) {
     int i = 0;
@@ -14,7 +28,6 @@ void get_resolution(char *res, t_game *game) {
         free_array(r);
         destroy_game(game);
     } 
-
     if(game->size.is_see == 0)
         game->size.is_see += 1;
     else {
@@ -23,17 +36,9 @@ void get_resolution(char *res, t_game *game) {
         free_array(r);
         destroy_game(game);
     }
-
     game->size.width = ft_atoi(r[1]);
     game->size.height = ft_atoi(r[2]);
-    if(game->size.height < 600) {
-        ft_putstr("LOG: height is lower than min height, the height is now 600\n");
-        game->size.height = 600;
-    }
-     if(game->size.width < 800) {
-        ft_putstr("LOG: width is lower than min width, the width is now 800\n");
-        game->size.width = 800;
-    }
+    check_min_and_max_size(game, r);
     free_array(r);
 }
 

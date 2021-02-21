@@ -41,6 +41,8 @@ void destroy_game(t_game *game) {
         mlx_destroy_window(game->render.mlx, game->render.win);
         free(game->render.mlx);
     }
+
+    system("leaks cub3d");
     exit(0);
 }
 

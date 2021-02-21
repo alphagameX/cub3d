@@ -23,6 +23,10 @@ int rendering(t_game *game) {
         x++;
     }
     sprite_casting(game);
+
+    if(game->settings.bmp_required == 1)
+        file_bmp(game);
+
     mlx_put_image_to_window(game->render.mlx, game->render.win, game->render.frame.img, 0, 0);
     return (1);
 }

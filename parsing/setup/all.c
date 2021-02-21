@@ -41,6 +41,7 @@ void init_all(t_game *game) {
     game->size.width = 0;
     game->size.height = 0;
     game->size.is_see = 0;
+    game->settings.bmp_required = 0;
     game->settings.move_speed = 0.1;
     game->settings.hit_distance = 0.3;
     game->settings.rot_speed = 0.1;

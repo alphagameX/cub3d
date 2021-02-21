@@ -4,7 +4,7 @@ LIB = ./super-libft/
 FLAG = -Werror -Wall -Wextra
 
 #PARSING
-TEXTURE = texture.c resolution.c box.c
+TEXTURE = texture.c box.c
 MAP = $(addprefix map/, function.c propagation.c spawn.c tmap.c)
 SPRITE = $(addprefix sprite/, add.c sort.c)
 MODEL = $(TEXTURE) $(MAP) $(SPRITE)
@@ -17,7 +17,7 @@ PARSE = parsing/parse.c $(SETUP) $(MODELS)
 MOVE = $(addprefix rendering/moving/, moves.c turns.c)
 RAYCASTING = $(addprefix rendering/raycasting/, loop.c ray.c sprite.c wall.c)
 CORE = $(addprefix rendering/core/, input.c function.c)
-RENDER = $(CORE) $(RAYCASTING) $(MOVE)
+RENDER = $(CORE) $(RAYCASTING) $(MOVE) rendering/bmp.c
 
 OBJ = main.c $(PARSE) $(RENDER)
 UNAME=$(shell uname)
@@ -41,7 +41,7 @@ TURN_RIGHT = 65361
 TURN_LEFT = 65363
 ECHAP = 65307
 OS = 0
-OBJ += parsing/setup/destroy_linux.c
+OBJ += parsing/setup/destroy_linux.c parsing/model/resolution_linux.c
 endif
 
 ifeq ($(UNAME), Darwin)
@@ -54,7 +54,7 @@ TURN_RIGHT = 123
 TURN_LEFT = 124
 ECHAP = 53
 OS = 1
-OBJ += parsing/setup/destroy_osx.c
+OBJ += parsing/setup/destroy_osx.c parsing/model/resolution_osx.c
 endif
 
 #CONTROL DEFINE

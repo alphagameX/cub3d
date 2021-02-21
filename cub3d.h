@@ -22,6 +22,7 @@ typedef struct s_settings {
     double move_speed;
     double hit_distance;
     double rot_speed;
+    int bmp_required;
 } t_settings;
 
 typedef struct s_rgb {
@@ -135,6 +136,15 @@ typedef struct s_render {
     t_move moves;
 } t_render;
 
+typedef struct s_bmp {
+    int pixel_data_offset;
+    int header_size;
+    int plane;
+    int file_size;
+    int fd;
+    int img_size;
+} t_bmp; 
+
 typedef struct s_game {
     t_size size;
     t_texture texture;
@@ -142,6 +152,7 @@ typedef struct s_game {
     t_tmap map;
     t_render render;
     t_settings settings;
+    t_bmp bmp; 
 } t_game;
 
 
@@ -206,5 +217,7 @@ void strate_left(t_game *game, double colision);
 void strate_right(t_game *game, double colision);
 void turn_left(t_game *game, double rot_speed);
 void turn_right(t_game *game, double rot_speed);
+
+void	file_bmp(t_game *game);
 
 #endif //CUB3D_CUB3D_H
