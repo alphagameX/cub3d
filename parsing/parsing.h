@@ -13,6 +13,7 @@ void init_all(t_game *game);
 void init_texture(t_texture *texture);
 void init_moves(t_move *moves);
 void init_box(t_box *box);
+void complete_file(t_lines *gnl, char *file);
 void get_resolution(char *res, t_game *game);
 char *check_is_valid_texture_path(char *texture_path);
 void get_texture(char *line, t_game *game);
