@@ -83,6 +83,7 @@ t_game		parsing(char *file)
 	}
 	is_valid_texture(&game);
 	is_valid_box(&game);
+	is_valid_resolution(&game);
 	parse_smap(&game);
 	return (game);
 }

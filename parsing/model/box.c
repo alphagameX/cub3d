@@ -64,8 +64,8 @@ void	create_rgb(t_rgb *rgb, t_game *game, char *color)
 	while (str[i])
 	{
 		tmp = ft_atoi(str[i]);
-		if (tmp > 255 || tmp < 0)
-			fail_box(str, game, "RBG is above 255 or lower 0\n");
+		if ((tmp > 255)||(tmp < 0)||(has_letter(str[i]) == 1))
+			fail_box(str, game, "RBG is above 255 or lower 0 or contain letter\n");
 		i++;
 	}
 	if (i != 3 || rgb->is_see > 1)

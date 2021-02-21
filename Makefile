@@ -7,7 +7,7 @@ FLAG =
 TEXTURE = texture.c box.c 
 MAP = $(addprefix map/, function.c propagation.c spawn.c tmap.c)
 SPRITE = $(addprefix sprite/, add.c sort.c)
-MODEL = $(TEXTURE) $(MAP) $(SPRITE) resolution.c
+MODEL = $(TEXTURE) $(MAP) $(SPRITE) resolution.c function.c
 
 MODELS = $(addprefix parsing/model/, $(MODEL))
 SETUP = $(addprefix parsing/setup/, init.c param.c)

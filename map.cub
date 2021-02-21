@@ -1,11 +1,11 @@
-R 1280 720 
-NO ./srcs/eagle.xpm
-SO ./srcs/greystone.xpm
-WE ./srcs/mossy.xpm
-EA ./srcs/wood.xpm
-S ./srcs/pillar.xpm
-F  234,123,8
-C  32,124,34
+R 1280 720
+NO ./map/textures/eagle.xpm
+SO ./map/textures/greystone.xpm
+WE ./map/textures/mossy.xpm
+EA ./map/textures/wood.xpm
+S ./map/textures/pillar.xp
+F  234,123,0
+C  32,124,0
 
       1111111111111111111
 11111110000000002222000001

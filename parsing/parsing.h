@@ -21,6 +21,7 @@ void	init_moves(t_move *moves);
 void	init_box(t_box *box);
 void	complete_file(t_lines *gnl, char *file);
 void	get_resolution(char *res, t_game *game);
+int     has_letter(char *str);
 char	*check_is_valid_texture_path(char *texture_path);
 void	get_texture(char *line, t_game *game);
 void	get_box(char *line, t_game *game);
@@ -34,6 +35,7 @@ void	push_sprite(t_game *game, int x, int y);
 void	propagation(char **t, t_tmap map, t_game *game);
 void	is_valid_texture(t_game *game);
 void	is_valid_box(t_game *game);
+void    is_valid_resolution(t_game *game);
 void	free_array(char **r);
 
 #endif

@@ -12,6 +12,16 @@
 
 #include "../parsing.h"
 
+void is_valid_resolution(t_game *game)
+{
+	if ((game->size.height == 0) || (game->size.width == 0))
+	{
+		ft_putstr("Error\n");
+		ft_putstr("Missing resolution flag\n");
+		destroy_game(game);
+	}
+}
+
 void	check_min_and_max_size(t_game *game, char **r)
 {
 	if (game->size.width < 300)
