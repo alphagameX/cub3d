@@ -84,7 +84,7 @@ re: fclean
 	@make all
 
 run:
-	@./$(NAME) $(CUB)
+	@./$(NAME) $(CUB) --debug
 save:
 	@./$(NAME) $(CUB) --save
 	

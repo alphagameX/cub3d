@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   function.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atinseau <atinseau@student.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/22 00:25:36 by atinseau          #+#    #+#             */
+/*   Updated: 2021/02/22 00:25:51 by atinseau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
-int has_letter(char *str)
+int		has_letter(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while(str[i])
-    {
-        if(ft_isalpha(str[i]))
-            return (1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalpha(str[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }

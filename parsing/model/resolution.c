@@ -6,13 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 17:31:16 by user42            #+#    #+#             */
-/*   Updated: 2021/02/21 17:35:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/22 00:27:05 by atinseau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parsing.h"
 
-void is_valid_resolution(t_game *game)
+void	is_valid_resolution(t_game *game)
 {
 	if ((game->size.height == 0) || (game->size.width == 0))
 	{

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 17:22:00 by user42            #+#    #+#             */
-/*   Updated: 2021/02/21 17:30:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/22 00:28:39 by atinseau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,27 @@
 void	is_valid_box(t_game *game)
 {
 	if (game->box.floor.is_see == 0 ||
-	game->box.sky.is_see == 0 || game->box.sprite.is_see == 0)
+	game->box.sky.is_see == 0 || game->box.sprite.is_see == 0 ||
+	game->box.sprite.path == NULL)
 	{
 		ft_putstr("Error\n");
 		if (game->box.floor.is_see == 0)
 			ft_putstr("Floor argument is missing\n");
 		if (game->box.sky.is_see == 0)
 			ft_putstr("Sky argument is missing\n");
-		if (game->box.sprite.is_see == 0)
-			ft_putstr("Sprite argument is missing\n");
+		if (game->box.sprite.is_see == 0 || game->box.sprite.path == NULL)
+			ft_putstr("Sprite argument is missing or wrong xpm\n");
 		destroy_game(game);
 	}
 }
 
-void	check_box_sprite(t_sprite *sprite, t_game *game, char *param)
+void	check_box_sprite(t_sprite *sprite, t_game *game, char **param)
 {
 	if (sprite->is_see < 1)
 	{
-		sprite->path = check_is_valid_texture_path(param);
+		sprite->path = check_is_valid_texture_path(param[1]);
+		if (!sprite->path)
+			free(param[1]);
 		sprite->is_see += 1;
 	}
 	else
@@ -64,8 +67,8 @@ void	create_rgb(t_rgb *rgb, t_game *game, char *color)
 	while (str[i])
 	{
 		tmp = ft_atoi(str[i]);
-		if ((tmp > 255)||(tmp < 0)||(has_letter(str[i]) == 1))
-			fail_box(str, game, "RBG is above 255 or lower 0 or contain letter\n");
+		if ((tmp > 255) || (tmp < 0) || (has_letter(str[i]) == 1))
+			fail_box(str, game, "RBG is > 255 or < 0 or contain letter\n");
 		i++;
 	}
 	if (i != 3 || rgb->is_see > 1)
@@ -92,7 +95,7 @@ void	get_box(char *line, t_game *game)
 	if (i != 2)
 		fail_box(param, game, "Too many argument for S, C or F args\n");
 	if (**param == 'S')
-		check_box_sprite(&game->box.sprite, game, param[1]);
+		check_box_sprite(&game->box.sprite, game, param);
 	if (**param == 'F')
 	{
 		create_rgb(&game->box.floor, game, param[1]);
