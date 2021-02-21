@@ -1,6 +1,8 @@
 #include "../../cub3d.h"
 
 void register_hook(t_game *game) {
+
+
     if(game->settings.bmp_required == 0) {
         if(OS == 1)
             mlx_hook(game->render.win, 17, 1L<<5, leave_game, game);
@@ -12,5 +14,4 @@ void register_hook(t_game *game) {
     } else {
         rendering(game);
     }
-    
 }

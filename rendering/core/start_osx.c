@@ -45,12 +45,13 @@ void arguement_detection(int argv, char **argc, t_game *game) {
 }
 
 void start(t_game *game) {
+    set_dir(game);
     if(game->settings.bmp_required == 0)
         game->render.win = mlx_new_window(game->render.mlx, game->size.width, game->size.height, "cub3D");
     game->render.frame.img = mlx_new_image(game->render.mlx, game->size.width, game->size.height);
     game->render.frame.addr = mlx_get_data_addr(game->render.frame.img, &game->render.frame.bits_per_pixel, &game->render.frame.line_length, &game->render.frame.endian);
     if(game->settings.bmp_required == 0)
         mlx_put_image_to_window(game->render.mlx, game->render.win, game->render.frame.img, 0, 0);
-    generate_textures(&game);
-    register_hook(&game);
+    generate_textures(game);
+    register_hook(game);
 }
