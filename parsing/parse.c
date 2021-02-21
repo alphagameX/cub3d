@@ -67,6 +67,7 @@ t_game		parsing(char *file)
 	t_game	game;
 
 	game = new_game();
+	i = 0;
 	complete_file(&game.map.gnl, file);
 	while (i < game.map.gnl.nb_line)
 	{
