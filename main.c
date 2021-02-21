@@ -52,8 +52,11 @@ int		main(int argv, char **argc)
 {
 	t_game game;
 
-	if (argv < 2)
+	if (argv < 2) {
+		ft_putstr("Error\n");
+		ft_putstr("Cub3d has no argument\n");
 		return (0);
+	}
 	game = parsing(is_valid_path(argc[1]));
 	game.render.ray.zbuf = (double *)malloc(sizeof(double) * game.size.width);
 	arguement_detection(argv, argc, &game);

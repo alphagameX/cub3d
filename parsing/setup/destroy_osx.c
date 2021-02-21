@@ -59,6 +59,6 @@ void	destroy_game(t_game *game)
 	if (game->render.win != NULL)
 		mlx_destroy_window(game->render.mlx, game->render.win);
 	if (game->render.mlx != NULL)
-		mlx_destroy_display(game->render.mlx);
+		free(game->render.mlx);
 	exit(0);
 }

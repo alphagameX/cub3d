@@ -32,6 +32,10 @@ TURN_LEFT = 65361
 
 #OS CHECK
 ifeq ($(UNAME), Linux)
+MLX_CLEAN = cd mlx_linux && make clean
+MLX_ALL = cd mlx_linux && make all
+MLX_RE = cd mlx_linux && make re
+
 TARGET = -L./mlx_linux -l mlx -L/usr/lib -lXext -lX11 -I/usr/include -lm -lz  -O3 
 UP = 122
 DOWN = 115
@@ -45,6 +49,10 @@ OBJ += parsing/setup/destroy_linux.c rendering/core/start_linux.c
 endif
 
 ifeq ($(UNAME), Darwin)
+MLX_CLEAN = cd mlx && make clean
+MLX_ALL = cd mlx && make all
+MLX_RE = cd mlx && make re
+
 TARGET = -Lmlx -lmlx -framework OpenGL -framework AppKit 
 UP = 13
 DOWN = 1
@@ -62,10 +70,14 @@ KEY= -D UP=$(UP) -D DOWN=$(DOWN) -D RIGHT=$(RIGHT) -D LEFT=$(LEFT) -D TURN_RIGHT
 
 
 all:
+	@cd $(LIB) && make all
+	@make mlx_all
 	@gcc $(OBJ) -D OS=$(OS) -L $(LIB) -l ft -o $(NAME) $(FLAG) $(TARGET) $(KEY) 
 	@echo "Compilation done!"
 
 re: fclean
+	@echo "Recompliling mlx"
+	@$(MLX_RE)
 	@echo "Recompliling libft"
 	@cd $(LIB) && make all
 	@echo "Recompliling cub3d"
@@ -81,14 +93,16 @@ clean:
 	@echo "Cleanig cub3d"
 
 fclean: clean
+	@make mlx_clean
 	@cd $(LIB) && make fclean
 
-mlx:
-	ifeq ($(UNAME), Linux)
-	@git clone https://github.com/42Paris/minilibx-linux.git mlx_linux
-	@cd mlx_linux && make 
-	endif
-	ifeq ($(UNAME), Darwin)
-	@git clone https://github.com/42sommecaise/mlx.git mlx
-	@cd mlx && make 
-	endif 
+bonus: all
+
+mlx_all:
+	@$(MLX_ALL)
+
+mlx_re:
+	@$(MLX_RE)
+
+mlx_clean:
+	@$(MLX_CLEAN)
