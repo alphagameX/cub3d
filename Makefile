@@ -15,8 +15,8 @@ PARSE = parsing/parse.c $(SETUP) $(MODELS)
 
 #RENDER
 MOVE = $(addprefix rendering/moving/, moves.c turns.c)
-RAYCASTING = $(addprefix rendering/raycasting/, loop.c ray.c sprite.c wall.c)
-CORE = $(addprefix rendering/core/, input.c function.c hook.c)
+RAYCASTING = $(addprefix rendering/raycasting/, loop.c ray.c sprite.c sprite2.c wall.c)
+CORE = $(addprefix rendering/core/, input.c function.c hook.c set_dir.c)
 RENDER = $(CORE) $(RAYCASTING) $(MOVE) rendering/bmp.c
 
 OBJ = main.c $(PARSE) $(RENDER)

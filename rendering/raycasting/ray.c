@@ -1,78 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/21 18:35:26 by user42            #+#    #+#             */
+/*   Updated: 2021/02/21 19:44:01 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cub3d.h"
 
-void rayDir(t_game *game, int mapX, int mapY) {
-    if(game->render.ray.rayDirX < 0)
-    {
-        game->render.ray.stepX = -1;
-        game->render.ray.sideDistX = (double)(game->map.spawn.x - mapX) *  game->render.ray.deltaDistX;
-    }
-    else
-    {
-        game->render.ray.stepX = 1;
-        game->render.ray.sideDistX = (double)(mapX + 1 - game->map.spawn.x) *  game->render.ray.deltaDistX;
-    }
-    if(game->render.ray.rayDirY < 0)
-    {
-        game->render.ray.stepY = -1;
-        game->render.ray.sideDistY = (double)(game->map.spawn.y - mapY) *  game->render.ray.deltaDistY;
-    }
-    else
-    {
-        game->render.ray.stepY = 1;
-        game->render.ray.sideDistY = (double)(mapY + 1 - game->map.spawn.y) * game->render.ray.deltaDistY;
-    }
+void	ray_dir(t_game *game, int map_x, int map_y)
+{
+	if (game->render.ray.ray_dir_x < 0)
+	{
+		game->render.ray.step_x = -1;
+		game->render.ray.side_dist_x = (double)(game->map.spawn.x - map_x) *
+		game->render.ray.delta_dist_x;
+	}
+	else
+	{
+		game->render.ray.step_x = 1;
+		game->render.ray.side_dist_x = (double)(map_x + 1 - game->map.spawn.x) *
+		game->render.ray.delta_dist_x;
+	}
+	if (game->render.ray.ray_dir_y < 0)
+	{
+		game->render.ray.step_y = -1;
+		game->render.ray.side_dist_y = (double)(game->map.spawn.y - map_y) *
+		game->render.ray.delta_dist_y;
+	}
+	else
+	{
+		game->render.ray.step_y = 1;
+		game->render.ray.side_dist_y = (double)(map_y + 1 - game->map.spawn.y) *
+		game->render.ray.delta_dist_y;
+	}
 }
 
-
-void set_start_ray(int x, t_game *game) {
-    //calculate ray position and direction
-    game->render.ray.angleX = 2 * x / (double)game->size.width - 1; //x-coordinate in camera space
-    game->render.ray.rayDirX = game->render.ray.dirX + game->render.ray.planeX * game->render.ray.angleX;
-    game->render.ray.rayDirY = game->render.ray.dirY + game->render.ray.planeY * game->render.ray.angleX;
-    //which box of the map we're in
-    game->render.ray.mapX = (int)game->map.spawn.x;
-    game->render.ray.mapY = (int)game->map.spawn.y;
-
-    game->render.ray.deltaDistX = fabs(1 / game->render.ray.rayDirX);
-    game->render.ray.deltaDistY = fabs(1 / game->render.ray.rayDirY);
+void	set_start_ray(int x, t_game *game)
+{
+	game->render.ray.angle_x = 2 * x / (double)game->size.width - 1;
+	game->render.ray.ray_dir_x = game->render.ray.dir_x +
+	game->render.ray.plane_x * game->render.ray.angle_x;
+	game->render.ray.ray_dir_y = game->render.ray.dir_y +
+	game->render.ray.plane_y * game->render.ray.angle_x;
+	game->render.ray.map_x = (int)game->map.spawn.x;
+	game->render.ray.map_y = (int)game->map.spawn.y;
+	game->render.ray.delta_dist_x = fabs(1 / game->render.ray.ray_dir_x);
+	game->render.ray.delta_dist_y = fabs(1 / game->render.ray.ray_dir_y);
 }
 
+void	dda(t_game *game, int *side)
+{
+	int hit;
 
-void dda(t_game *game, int *side) {
-    int hit;
-
-    hit = 0;
-    while (hit == 0)
-    {
-        //jump to next map square, OR in x-direction, OR in y-direction
-        if(game->render.ray.sideDistX < game->render.ray.sideDistY)
-        {
-            game->render.ray.sideDistX += game->render.ray.deltaDistX;
-            game->render.ray.mapX += game->render.ray.stepX;
-            *side = 0;
-        }
-        else
-        {
-            game->render.ray.sideDistY += game->render.ray.deltaDistY;
-            game->render.ray.mapY += game->render.ray.stepY;
-            *side = 1;
-        }
-        //Check if ray has hit a wall
-        if(game->map.tmap[game->render.ray.mapX][game->render.ray.mapY] == '1')
-            hit = 1;
-    }
+	hit = 0;
+	while (hit == 0)
+	{
+		if (game->render.ray.side_dist_x < game->render.ray.side_dist_y)
+		{
+			game->render.ray.side_dist_x += game->render.ray.delta_dist_x;
+			game->render.ray.map_x += game->render.ray.step_x;
+			*side = 0;
+		}
+		else
+		{
+			game->render.ray.side_dist_y += game->render.ray.delta_dist_y;
+			game->render.ray.map_y += game->render.ray.step_y;
+			*side = 1;
+		}
+		if (game->map.tmap[game->render.ray.map_x][game->render.ray.map_y] ==
+		'1')
+			hit = 1;
+	}
 }
 
-void lineHeight(t_game *game) {
-     //Calculate height of line to draw on screen
-    game->render.ray.lineHeight = (int)(game->size.height / game->render.ray.perpWallDist);
-    //calculate lowest and highest pixel to fill in current stripe
-    game->render.ray.drawStart = -game->render.ray.lineHeight / 2 + game->size.height / 2;
-    if(game->render.ray.drawStart < 0) {
-        game->render.ray.drawStart = 0;
-    }
-    game->render.ray.drawEnd = game->render.ray.lineHeight / 2 + game->size.height / 2;
-    if(game->render.ray.drawEnd >= game->size.height) {
-        game->render.ray.drawEnd = game->size.height - 1;
-    }
+void	line_height(t_game *game)
+{
+	game->render.ray.line_height = (int)(game->size.height
+	/ game->render.ray.perp_wall_dist);
+	game->render.ray.draw_start = -game->render.ray.line_height
+	/ 2 + game->size.height / 2;
+	if (game->render.ray.draw_start < 0)
+		game->render.ray.draw_start = 0;
+	game->render.ray.draw_end = game->render.ray.line_height
+	/ 2 + game->size.height / 2;
+	if (game->render.ray.draw_end >= game->size.height)
+		game->render.ray.draw_end = game->size.height - 1;
 }
