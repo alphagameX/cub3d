@@ -44,7 +44,7 @@ void arround_check(char **t, int *y, int *x, t_game *game) {
     }
 }
 
-int propagation(char **t, t_tmap map, t_game *game) {
+void propagation(char **t, t_tmap map, t_game *game) {
     int y;
     int x;
 
@@ -59,5 +59,4 @@ int propagation(char **t, t_tmap map, t_game *game) {
         }
         y++;
     }
-    return (1);
 }

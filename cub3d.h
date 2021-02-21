@@ -37,7 +37,10 @@ typedef struct s_size {
     int is_see;
 } t_size;
 
-
+typedef struct s_lines {
+    char **all;
+    int nb_line;
+} t_lines;
 
 typedef struct s_spawn {
     char dir;
@@ -50,6 +53,8 @@ typedef struct s_tmap {
     int height;
     t_spawn spawn;
 
+    t_lines gnl;
+    char *smap;
     char **tmap;
 } t_tmap;
 
@@ -152,75 +157,38 @@ typedef struct s_game {
     t_tmap map;
     t_render render;
     t_settings settings;
-    t_bmp bmp; 
+    t_bmp bmp;
 } t_game;
 
 
 // init
-char *is_valid_path(char *path);
-double get_param(t_game *game, char *param);
-
-t_game new_game();
-void set_dir(t_game *game);
-
-// parsing
 
 t_game parsing(char *file);
-void destroy_game(t_game *game);
-
-// crasher
-void exit_failure(char *msg);
-void map_valid(t_game game);
-
-
-// utils
+char *is_valid_path(char *path);
+void arguement_detection(int argv, char **argc, t_game *game);
+double get_param(t_game *game, char *param);
 void debug_map(t_game game);
-
-// drawing
-
-void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
-unsigned int my_mlx_pixel_get(t_frame *data, int x, int y);
-
-// render
-int rendering(t_game *game);
-int move(t_game *game);
-char *get_color(char **addr,int width,int y, int x);
-
-// ray
-void rayDir(t_game *game, int mapX, int mapY);
-void set_start_ray(int x, t_game *game);
-void dda(t_game *game, int *side);
-void lineHeight(t_game *game);
-
-// wall
-void wall_casting(t_game *game, int side, int x);
-
-// sprite
-int relative_distance(t_spawn p, t_scoord s);
-void swap_sprite(t_scoord *src, t_scoord *dst);
-void sortSprite(t_sprite *sprite, t_spawn spawn);
-void sprite_casting(t_game *game);
-
+void destroy_game(t_game *game);
+void start(t_game *game);
+void generate_textures(t_game *game);
+void register_hook(t_game *game);
+int leave_game(t_game *game); 
 int set_move(int key_code, t_move *moves);
 int unset_move(int key_code, t_move *moves);
-
-//core
-void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
-int new_image(t_game *game);
-void generate_textures(t_game *game);
-int leave_game(t_game *game); 
-
-// move
-void forward(t_game *game, double colision);
-void backward(t_game *game,  double colision);
-void strate_left(t_game *game, double colision);
-void strate_right(t_game *game, double colision);
+int rendering(t_game *game);
+int move(t_game *game);
 void turn_left(t_game *game, double rot_speed);
 void turn_right(t_game *game, double rot_speed);
-
+void set_start_ray(int x, t_game *game);
+void rayDir(t_game *game, int mapX, int mapY);
+void dda(t_game *game, int *side);
+void lineHeight(t_game *game);
+void wall_casting(t_game *game, int side, int x);
+void my_mlx_pixel_put(t_frame *data, int x, int y, int color);
+char *get_color(char **addr,int width,int y, int x);
+void sprite_casting(t_game *game);
+void sortSprite(t_sprite *sprite, t_spawn spawn);
 void	file_bmp(t_game *game);
-void register_hook(t_game *game);
-void arguement_detection(int argv, char **argc, t_game *game);
-void start(t_game *game);
+
 
 #endif //CUB3D_CUB3D_H

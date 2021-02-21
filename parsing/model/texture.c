@@ -36,9 +36,11 @@ void check_tex(t_tex *tex, t_game *game, char **param) {
 }
 
 void get_texture(char *line, t_game *game) {
-    char **param = ft_split(line, ' ');
-    int i = 0;
+    char **param;
+    int i;
 
+    param = ft_split(line, ' ');
+    i = 0;
     while(param[i])
         i++;
     if(i != 2) {

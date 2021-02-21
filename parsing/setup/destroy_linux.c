@@ -29,16 +29,30 @@ void free_image(t_game *game) {
 }
 
 void destroy_game(t_game *game) {
+    int i;
+
+    i = 0;
+    if(game->map.gnl.all != NULL) {
+        while(i < game->map.gnl.nb_line)
+            free(game->map.gnl.all[i++]);
+        free(game->map.gnl.all);
+    }
+
     free_texture(game);
-    if(game->render.ray.zbuf)
+    if(game->map.tmap != NULL)
+        free_array(game->map.tmap);
+    if(game->render.ray.zbuf != NULL)
         free(game->render.ray.zbuf);
     if(game->box.sprite.nb_sprite > 0)
-        free(game->box.sprite.data);
-    if(game->map.height != 0 && game->map.width != 0)
-        free_array(game->map.tmap);
+        free(game->box.sprite.data); 
+    if(game->map.smap != NULL)
+        free(game->map.smap);
     free_image(game);
     if(game->render.win != NULL) {
         mlx_destroy_window(game->render.mlx, game->render.win);
+    }
+
+    if(game->render.mlx != NULL) {
         mlx_destroy_display(game->render.mlx);
         free(game->render.mlx);
     }

@@ -1,5 +1,19 @@
 #include "../parsing.h"
 
+void is_valid_box(t_game *game) {
+    if(game->box.floor.is_see == 0 || game->box.sky.is_see == 0 || game->box.sprite.is_see == 0)
+    {
+        ft_putstr("Error\n");
+        if(game->box.floor.is_see == 0)
+            ft_putstr("Floor argument is missing\n");
+        if(game->box.sky.is_see == 0)
+            ft_putstr("Sky argument is missing\n");
+        if(game->box.sprite.is_see == 0)
+            ft_putstr("Sprite argument is missing\n");
+        destroy_game(game);
+    }
+}
+
 void check_box_sprite(t_sprite *sprite, t_game *game, char *param) {
      if(sprite->is_see < 1) {
            sprite->path = check_is_valid_texture_path(param);
@@ -40,9 +54,11 @@ void create_rgb(t_rgb *rgb, t_game *game, char *color) {
 }
 
 void get_box(char *line, t_game *game) {
-    char ** param = ft_split(line, ' ');
-    int i = 0;
+    char **param;
+    int i;
 
+    param = ft_split(line, ' ');
+    i = 0;
     while(param[i])
         i++;
     if(i != 2) {

@@ -10,7 +10,7 @@ SPRITE = $(addprefix sprite/, add.c sort.c)
 MODEL = $(TEXTURE) $(MAP) $(SPRITE) resolution.c
 
 MODELS = $(addprefix parsing/model/, $(MODEL))
-SETUP = $(addprefix parsing/setup/, init.c param.c all.c)
+SETUP = $(addprefix parsing/setup/, init.c param.c)
 PARSE = parsing/parse.c $(SETUP) $(MODELS) 
 
 #RENDER
@@ -72,7 +72,9 @@ re: fclean
 	@make all
 
 run:
-	@./$(NAME) $(CUB) --debug speed=10 rot=10 hit=30
+	@./$(NAME) $(CUB)
+save:
+	@./$(NAME) $(CUB) --save
 	
 clean: 
 	@rm -rf $(NAME)
@@ -80,4 +82,13 @@ clean:
 
 fclean: clean
 	@cd $(LIB) && make fclean
-	
+
+mlx:
+	ifeq ($(UNAME), Linux)
+	@git clone https://github.com/42Paris/minilibx-linux.git mlx_linux
+	@cd mlx_linux && make 
+	endif
+	ifeq ($(UNAME), Darwin)
+	@git clone https://github.com/42sommecaise/mlx.git mlx
+	@cd mlx && make 
+	endif 

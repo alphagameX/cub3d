@@ -3,25 +3,37 @@
 
 void	header_bmp(t_game *game, t_bmp *bmp)
 {
+	ssize_t t;
+
+
 	bmp->file_size = bmp->pixel_data_offset + (game->size.width *
 			game->size.height * 4);
-	write(bmp->fd, "BM", 2);
-	write(bmp->fd, &bmp->file_size, 4);
-	write(bmp->fd, "\0\0\0\0", 4);
-	write(bmp->fd, &bmp->pixel_data_offset, 4);
+	t = write(bmp->fd, "BM", 2);
+	t = write(bmp->fd, &bmp->file_size, 4);
+	t = write(bmp->fd, "\0\0\0\0", 4);
+	t = write(bmp->fd, &bmp->pixel_data_offset, 4);
+
+	if(t == -1)
+		destroy_game(game);
 }
 
 void	info_img_bmp(t_game *game, t_bmp *bmp)
 {
+	ssize_t t;
+
 	bmp->img_size = game->size.width * game->size.height;
-	write(bmp->fd, &bmp->header_size, 4);
-	write(bmp->fd, &game->size.width, 4);
-	write(bmp->fd, &game->size.height, 4);
-	write(bmp->fd, &bmp->plane, 2);
-	write(bmp->fd, &game->render.frame.bits_per_pixel, 2);
-	write(bmp->fd, "\0\0\0\0", 4);
-	write(bmp->fd, &bmp->img_size, 4);
-	write(bmp->fd, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16);
+	t = write(bmp->fd, &bmp->header_size, 4);
+	t = write(bmp->fd, &game->size.width, 4);
+	t = write(bmp->fd, &game->size.height, 4);
+	t = write(bmp->fd, &bmp->plane, 2);
+	t = write(bmp->fd, &game->render.frame.bits_per_pixel, 2);
+	t = write(bmp->fd, "\0\0\0\0", 4);
+	t = write(bmp->fd, &bmp->img_size, 4);
+	t = write(bmp->fd, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16);
+
+	if(t == -1)
+		destroy_game(game);
+
 }
 
 void	fill_bmp(t_game *game, t_bmp *bmp)
@@ -29,6 +41,7 @@ void	fill_bmp(t_game *game, t_bmp *bmp)
 	int tab[3];
 	int x;
 	int y;
+	ssize_t t;
 
 	y = game->size.height - 1;
 	while (y >= 0)
@@ -42,10 +55,12 @@ void	fill_bmp(t_game *game, t_bmp *bmp)
 				x * game->render.frame.bits_per_pixel / 8 + 1];
 			tab[2] = game->render.frame.addr[y * game->render.frame.line_length +
 				x * game->render.frame.bits_per_pixel / 8 + 2];
-			write(bmp->fd, &tab[0], 1);
-			write(bmp->fd, &tab[1], 1);
-			write(bmp->fd, &tab[2], 1);
-			write(bmp->fd, "\0", 1);
+			t = write(bmp->fd, &tab[0], 1);
+			t = write(bmp->fd, &tab[1], 1);
+			t = write(bmp->fd, &tab[2], 1);
+			t = write(bmp->fd, "\0", 1);
+			if(t == -1)
+				destroy_game(game);
 			x++;
 		}
 		y--;
@@ -66,6 +81,6 @@ void	file_bmp(t_game *game)
 	info_img_bmp(game, &game->bmp);
 	fill_bmp(game, &game->bmp);
 	close(game->bmp.fd);
-	ft_putstr("Bmp file successfuly created !\n");
+	ft_putstr("Bmp file successfully created !\n");
 	destroy_game(game);
 }

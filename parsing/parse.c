@@ -41,34 +41,66 @@ int is_box(char *line) {
     return (0);
 }
 
+void push_line(t_lines *lines, char *line) {
+    t_lines new;
+    int i;
+    
+    i = 0;
+    new.nb_line = 0;
+    if(!(new.all = malloc(sizeof(char *) * (lines->nb_line + 1))))
+        exit(-1);
+    while(i < lines->nb_line) {
+        new.all[i] = ft_strdup((const char *)lines->all[i]);
+        free(lines->all[i]);
+        lines->all[i] = NULL;
+        i++;
+    }
+    if(lines->nb_line > 0)
+        free(lines->all); 
+    new.all[i] = ft_strdup(line);
+    lines->nb_line++;
+    lines->all = new.all;
+}
 
-t_game parsing(char *file) {
-    int fd;
+void complete_file(t_lines *gnl, char *file) {
     char *line = NULL;
-    char *smap = NULL;
-    t_game game;
+    int fd;
+    int ret;
 
     if(!file && file == NULL)
         exit(0);
     fd = open((const char *)file, O_RDONLY);
-    game = new_game();
-    while(get_next_line(fd, &line)) {
-        if(line[0] == 'R')
-            get_resolution(line, &game);
-        else if(is_texture(line))
-            get_texture(line, &game);
-        else if(is_box(line))
-            get_box(line, &game);
-        else
-            ft_argv_strjoin(&smap, 2, line, "\n");
+    
+    ret = 1;
+    while(ret != 0) {
+        ret = get_next_line(fd, &line);
+       
+        push_line(gnl, line);
         free(line);
     }
-    close(fd);
-    ft_unleak_strjoin(&smap, line);
-    free(line);
+}
+
+
+t_game parsing(char *file) {
+    int i;
+    t_game game;
+   
+    game = new_game();
+    complete_file(&game.map.gnl, file);
+    while(i < game.map.gnl.nb_line) {
+        if(game.map.gnl.all[i][0] == 'R')
+            get_resolution(game.map.gnl.all[i], &game);
+        else if(is_texture(game.map.gnl.all[i]))
+            get_texture(game.map.gnl.all[i], &game);
+        else if(is_box(game.map.gnl.all[i]))
+            get_box(game.map.gnl.all[i], &game);
+        else
+            ft_argv_strjoin(&game.map.smap, 2, game.map.gnl.all[i], "\n");
+        i++;
+    }
     is_valid_texture(&game);
-    parse_smap(smap, &game);
-    free(smap);
+    is_valid_box(&game);
+    parse_smap(&game);
     return (game);
 }
 
