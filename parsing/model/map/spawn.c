@@ -62,6 +62,8 @@ t_spawn		get_map_spawn(char **t, t_tmap *map, t_game *game)
 
 	nb = 0;
 	y = 0;
+	spawn.x = -1;
+	spawn.y = -1;
 	while (y < map->height)
 	{
 		i = -1;

@@ -36,6 +36,7 @@ void	propagation(char **t, t_tmap map, t_game *game);
 void	is_valid_texture(t_game *game);
 void	is_valid_box(t_game *game);
 void	is_valid_resolution(t_game *game);
+void    has_spawn(t_game *game);
 void	free_array(char **r);
 
 #endif

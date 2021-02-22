@@ -25,3 +25,14 @@ int		has_letter(char *str)
 	}
 	return (0);
 }
+
+
+void has_spawn(t_game *game)
+{
+	if(game->map.spawn.x == -1 || game->map.spawn.y == -1)
+	{
+		ft_putstr("Error\n");
+		ft_putstr("Has no spawn\n");
+		destroy_game(game);
+	}
+}

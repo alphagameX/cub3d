@@ -85,5 +85,6 @@ t_game		parsing(char *file)
 	is_valid_box(&game);
 	is_valid_resolution(&game);
 	parse_smap(&game);
+	has_spawn(&game);
 	return (game);
 }
