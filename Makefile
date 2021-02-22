@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 CUB = map.cub
 LIB = ./super-libft/
 FLAG = 
@@ -84,7 +84,7 @@ re: fclean
 	@make all
 
 run:
-	@./$(NAME) $(CUB) --debug
+	@./$(NAME) $(CUB)
 save:
 	@./$(NAME) $(CUB) --save
 	

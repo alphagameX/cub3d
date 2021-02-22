@@ -52,7 +52,8 @@ int		main(int argv, char **argc)
 {
 	t_game game;
 
-	if (argv < 2) {
+	if (argv < 2)
+	{
 		ft_putstr("Error\n");
 		ft_putstr("Cub3d has no argument\n");
 		return (0);
